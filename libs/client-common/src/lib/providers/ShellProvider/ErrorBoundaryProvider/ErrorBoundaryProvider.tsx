@@ -1,7 +1,7 @@
 import type { PropsWithChildren } from "react";
 import { ErrorBoundary } from "react-error-boundary";
 
-import BlameError from "../../../components/BlameError/BlameError.tsx";
+import { BlameError } from '../../../components';
 
 export type StoreProviderProps = PropsWithChildren & {
 

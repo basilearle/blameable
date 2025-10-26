@@ -8,6 +8,9 @@
     },
     {
       "path": "./apps/portal-ui"
+    },
+    {
+      "path": "./libs/client-common"
     }
   ]
 }

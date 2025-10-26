@@ -1,7 +1,7 @@
+import { useBaseStore } from "@blameable/client-common";
 import { Flex, Heading, Select } from "@radix-ui/themes";
 import { FormattedMessage } from "react-intl";
 
-import {useBaseStore} from "../../store";
 
 export function BlameHeader() {
   const currentLocale = useBaseStore((state) => state.currentLocale);

@@ -2,14 +2,16 @@ import "@radix-ui/themes/styles.css";
 
 // ---
 
+import { ShellProvider } from '@blameable/client-common';
 import { StrictMode } from 'react';
 import { createRoot } from 'react-dom/client';
 
 import App from './app/App';
-import { ShellProvider } from "./features/ShellProvider";
 import { worker } from './mocks/browser';
 
+// eslint-disable-next-line @typescript-eslint/no-non-null-assertion
 const root = document.querySelector('#root')!;
+// eslint-disable-next-line @typescript-eslint/no-non-null-assertion
 const spinner = document.querySelector('#spinner-root')!;
 
 const queryParameters = new URLSearchParams(window.location.search);

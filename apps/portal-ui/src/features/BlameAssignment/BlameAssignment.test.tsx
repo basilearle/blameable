@@ -1,10 +1,8 @@
+import { ShellProviderFixture, type BaseState } from "@blameable/client-common";
 import { render } from "@testing-library/react";
 import { userEvent } from "@testing-library/user-event";
 
 import { BlameAssignment } from "./BlameAssignment";
-import type { BaseState } from "../../store";
-import { ShellProviderFixture } from "../ShellProvider/ShellProvider.fixture";
-
 
 const renderBlameAssignment = (defaultStoreProps?: Partial<BaseState>) => {
   return render(

@@ -1,8 +1,8 @@
+import { useBaseStore } from "@blameable/client-common";
 import { Box, Card } from "@radix-ui/themes";
 import { FormattedMessage } from "react-intl";
 
 import { BlameForm } from "../../components/BlameForm";
-import { useBaseStore } from "../../store";
 
 export function BlameAssignment() {
   const blameCount = useBaseStore((state) => state.blameCount);

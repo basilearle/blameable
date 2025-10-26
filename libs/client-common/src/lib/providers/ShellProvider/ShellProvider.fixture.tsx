@@ -3,7 +3,6 @@ import type { PropsWithChildren } from "react";
 import { ShellProvider } from "./ShellProvider";
 import type { BaseState } from "../../store";
 
-
 export type ShellProviderFixtureProps = PropsWithChildren & {
   defaultStoreProps?: Partial<BaseState>;
 };
@@ -29,8 +28,12 @@ export function ShellProviderFixture({
     currentLocale: 'en-CA',
     localeOptions: ['en-CA', 'fr-CA'],
     tokens: DEFAULT_MOCK_TOKENS,
-    onAssignBlame: async () => {},
-    handleLocaleChange: async () => {},
+    onAssignBlame: async () => {
+      console.log('onAssignBlame: assigning blame');
+    },
+    handleLocaleChange: async () => {
+      console.log('handleLocaleChange: changing locale');
+    },
     ...defaultStoreProps,
   };
 

@@ -1,7 +1,7 @@
 import '@testing-library/jest-dom'
 import { afterAll, afterEach, beforeAll } from 'vitest'
 
-import { server } from '../mocks/server'
+import { server } from './src/mocks/server'
 
 // Polyfill for ResizeObserver
 global.ResizeObserver = class ResizeObserver {

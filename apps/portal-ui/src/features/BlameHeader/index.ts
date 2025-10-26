@@ -1,1 +1,1 @@
-export * from './BlameHeader.tsx';
+export * from './BlameHeader';

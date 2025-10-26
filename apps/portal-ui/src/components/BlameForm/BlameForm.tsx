@@ -33,7 +33,7 @@ export function BlameForm({
         }}
       />
 
-      <Heading my="2" size="7">{title}</Heading>
+      <Heading as="h2" my="2" size="7">{title}</Heading>
 
       <Text as="p">{description}</Text>
 

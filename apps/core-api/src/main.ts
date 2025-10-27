@@ -1,11 +1,13 @@
 import { serve } from '@hono/node-server';
 import { Hono } from 'hono';
 
+import { apiRouter } from './router/router';
+
 const PORT = process.env.PORT || 3000;
 
 const app = new Hono();
 
-app.get('/', (c) => c.text('Hello Node.js!'));
+app.route('/api', apiRouter);
 
 const server = serve({
   fetch: app.fetch,

@@ -2,11 +2,13 @@ import { OpenAPIHono } from '@hono/zod-openapi';
 
 import { bootstrapRouter } from './bootstrap/bootstrap';
 import { healthRouter } from './health/router';
+import { tokensRouter } from './tokens/tokens';
 
 export const apiRouter = new OpenAPIHono();
 
 apiRouter.route('/bootstrap', bootstrapRouter);
 apiRouter.route('/health', healthRouter);
+apiRouter.route('/tokens', tokensRouter);
 
 apiRouter.doc('/doc', {
   openapi: '3.0.0',

@@ -1,12 +1,14 @@
 import { swaggerUI } from '@hono/swagger-ui';
 import { OpenAPIHono } from '@hono/zod-openapi';
 
+import { blameRouter } from './blame/router';
 import { bootstrapRouter } from './bootstrap/bootstrap';
 import { healthRouter } from './health/router';
 import { tokensRouter } from './tokens/tokens';
 
 export const apiRouter = new OpenAPIHono();
 
+apiRouter.route('/blame', blameRouter);
 apiRouter.route('/bootstrap', bootstrapRouter);
 apiRouter.route('/health', healthRouter);
 apiRouter.route('/tokens', tokensRouter);

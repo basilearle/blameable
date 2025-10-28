@@ -33,7 +33,7 @@ const bootstrapGetRoute = createRoute({
   method: 'get',
   path: '/',
   request: {
-    params: BootstrapGetParams,
+    query: BootstrapGetParams,
   },
   responses: {
     200: {
@@ -48,9 +48,9 @@ const bootstrapGetRoute = createRoute({
 });
 
 bootstrapRouter.openapi(bootstrapGetRoute, (c) => {
-  const requestedLocale = c.req.query('locale');
+  const { locale } = c.req.valid('query');
 
-  const defaultLocale = requestedLocale ?? 'en-CA';
+  const defaultLocale = locale ?? 'en-CA';
   const availableLocales = tokenService.getAvailableLocales();
   const tokens = tokenService.getTokensForLocale(defaultLocale);
 

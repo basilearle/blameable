@@ -1,11 +1,11 @@
 import { serve } from '@hono/node-server';
-import { Hono } from 'hono';
+import { OpenAPIHono } from '@hono/zod-openapi';
 
 import { apiRouter } from './router/router';
 
 const PORT = process.env.PORT || 3000;
 
-const app = new Hono();
+const app = new OpenAPIHono();
 
 app.route('/api', apiRouter);
 

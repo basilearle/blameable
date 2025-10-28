@@ -1,3 +1,4 @@
+import { swaggerUI } from '@hono/swagger-ui';
 import { OpenAPIHono } from '@hono/zod-openapi';
 
 import { bootstrapRouter } from './bootstrap/bootstrap';
@@ -16,4 +17,12 @@ apiRouter.doc('/doc', {
     version: '0.0.1',
     title: 'Blameable Core API',
   },
+  servers: [
+    {
+      url: '/api',
+      description: 'API Base Path',
+    },
+  ],
 });
+
+apiRouter.get('/swagger', swaggerUI({ url: '/api/doc' }));

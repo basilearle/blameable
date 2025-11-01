@@ -1,6 +1,7 @@
-import { ShellProviderFixture, type BaseState } from "@blameable/client-common";
 import { render } from "@testing-library/react";
 import { userEvent } from "@testing-library/user-event";
+
+import { ShellProviderFixture, type BaseState } from "@blameable/client-common";
 
 import { BlameAssignment } from "./BlameAssignment";
 

@@ -1,6 +1,7 @@
-import { useBaseStore } from "@blameable/client-common";
 import { Box, Card } from "@radix-ui/themes";
 import { FormattedMessage } from "react-intl";
+
+import { useBaseStore } from "@blameable/client-common";
 
 import { BlameForm } from "../../components/BlameForm";
 

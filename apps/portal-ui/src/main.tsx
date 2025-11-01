@@ -21,7 +21,7 @@ const locale = queryParameters.get('locale') ?? undefined;
 
 (async () => {
   client.setConfig({
-    baseUrl: 'http://localhost:3000/api',
+    baseUrl: import.meta.env.VITE_API_BASE_URL ?? '/api',
   });
 
   const { data, error } = await getBootstrap({

@@ -41,7 +41,7 @@ const bootstrapGetRoute = createRoute({
       content: {
         'application/json': {
           schema: BootstrapGetSchema,
-        },
+        }
       },
     },
   },

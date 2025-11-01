@@ -1,6 +1,7 @@
 import { swaggerUI } from '@hono/swagger-ui';
 import { OpenAPIHono, OpenAPIObjectConfigure } from '@hono/zod-openapi';
 import { Env } from 'hono';
+import { cors } from 'hono/cors';
 
 import { blameRouter } from './blame/router';
 import { bootstrapRouter } from './bootstrap/bootstrap';
@@ -22,6 +23,8 @@ const document: OpenAPIObjectConfigure<Env, '/'> = {
 };
 
 export const apiRouter = new OpenAPIHono();
+
+apiRouter.use(cors());
 
 apiRouter.route('/blame', blameRouter);
 apiRouter.route('/bootstrap', bootstrapRouter);

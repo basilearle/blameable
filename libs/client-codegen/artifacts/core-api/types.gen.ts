@@ -56,16 +56,16 @@ export type GetHealthResponses = {
     200: unknown;
 };
 
-export type GetTokensLocaleData = {
+export type GetTokensByLocaleData = {
     body?: never;
     path: {
         locale: string;
     };
     query?: never;
-    url: '/tokens/:locale';
+    url: '/tokens/{locale}';
 };
 
-export type GetTokensLocaleResponses = {
+export type GetTokensByLocaleResponses = {
     /**
      * successfully retrieved tokens
      */
@@ -76,4 +76,4 @@ export type GetTokensLocaleResponses = {
     };
 };
 
-export type GetTokensLocaleResponse = GetTokensLocaleResponses[keyof GetTokensLocaleResponses];
+export type GetTokensByLocaleResponse = GetTokensByLocaleResponses[keyof GetTokensByLocaleResponses];

@@ -4,10 +4,15 @@
   "private": true,
   "type": "module",
   "exports": {
-    "./artifacts/core-api": {
-      "types": "./artifacts/core-api/client/index.ts",
-      "import": "./artifacts/core-api/client/index.ts",
-      "default": "./artifacts/core-api/client/index.ts"
+    "./core-api": {
+      "types": "./artifacts/core-api/index.ts",
+      "import": "./artifacts/core-api/index.ts",
+      "default": "./artifacts/core-api/index.ts"
+    },
+    "./core-api/client.gen": {
+      "types": "./artifacts/core-api/client.gen.ts",
+      "import": "./artifacts/core-api/client.gen.ts",
+      "default": "./artifacts/core-api/client.gen.ts"
     },
     "./package.json": "./package.json"
   },

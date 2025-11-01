@@ -2,7 +2,7 @@
 
 import type { Client, Options as Options2, TDataShape } from './client';
 import { client } from './client.gen';
-import type { GetBootstrapData, GetBootstrapResponses, GetHealthData, GetHealthResponses, GetTokensLocaleData, GetTokensLocaleResponses, PostBlameData, PostBlameResponses } from './types.gen';
+import type { GetBootstrapData, GetBootstrapResponses, GetHealthData, GetHealthResponses, GetTokensByLocaleData, GetTokensByLocaleResponses, PostBlameData, PostBlameResponses } from './types.gen';
 
 export type Options<TData extends TDataShape = TDataShape, ThrowOnError extends boolean = boolean> = Options2<TData, ThrowOnError> & {
     /**
@@ -51,9 +51,9 @@ export const getHealth = <ThrowOnError extends boolean = false>(options?: Option
 /**
  * retrieves the language tokens for a given locale
  */
-export const getTokensLocale = <ThrowOnError extends boolean = false>(options: Options<GetTokensLocaleData, ThrowOnError>) => {
-    return (options.client ?? client).get<GetTokensLocaleResponses, unknown, ThrowOnError>({
-        url: '/tokens/:locale',
+export const getTokensByLocale = <ThrowOnError extends boolean = false>(options: Options<GetTokensByLocaleData, ThrowOnError>) => {
+    return (options.client ?? client).get<GetTokensByLocaleResponses, unknown, ThrowOnError>({
+        url: '/tokens/{locale}',
         ...options
     });
 };

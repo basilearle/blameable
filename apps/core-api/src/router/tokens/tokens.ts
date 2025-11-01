@@ -21,7 +21,7 @@ const TokensGetSchema = z.object({
 const tokensGetRoute = createRoute({
   description: 'retrieves the language tokens for a given locale',
   method: 'get',
-  path: '/:locale',
+  path: '/{locale}',
   request: {
     params: TokensGetParams,
   },

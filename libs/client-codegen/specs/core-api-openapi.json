@@ -91,7 +91,7 @@
         }
       }
     },
-    "/tokens/:locale": {
+    "/tokens/{locale}": {
       "get": {
         "description": "retrieves the language tokens for a given locale",
         "parameters": [

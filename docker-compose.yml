@@ -1,0 +1,15 @@
+services:
+  blameable-portal-ui:
+    container_name: blameable-portal-ui
+    image: blameable/portal-ui
+    restart: unless-stopped
+    ports:
+      - "8080:80"
+    environment:
+      - API_URL=blameable-core-api:3000
+  blameable-core-api:
+    container_name: blameable-core-api
+    image: blameable/core-api
+    restart: unless-stopped
+    ports:
+      - "3000:3000"

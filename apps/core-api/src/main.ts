@@ -17,5 +17,5 @@ serve({
   port: +environment.port,
 }, () => {
   console.log(`Server is running on http://localhost:${environment.port}`);
-  console.log(`CORS origins: ${environment.corsOrigins.join(', ')}`);
+  console.log(`CORS origins: ${environment.corsOrigins?.join(', ') ?? 'NONE DEFINED.'}`);
 });

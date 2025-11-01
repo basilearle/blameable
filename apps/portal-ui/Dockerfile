@@ -15,16 +15,20 @@ RUN npm prune --production
 
 FROM nginx:alpine AS production
 
+COPY --from=build /app/build/apps/portal-ui/docker-entrypoint.sh /
+
+COPY --from=build /app/build/apps/portal-ui/nginx.conf.template /etc/nginx/nginx.conf.template
+
 WORKDIR /usr/share/nginx/html
 
 COPY --from=build /app/build/apps/portal-ui/dist .
-
-COPY --from=build /app/build/apps/portal-ui/nginx.conf /etc/nginx/nginx.conf
 
 RUN chmod -R 740 /usr/share/nginx/html
 
 RUN chown -R nginx:nginx /usr/share/nginx/html
 
 EXPOSE 80
+
+ENTRYPOINT ["/docker-entrypoint.sh"]
 
 CMD ["nginx", "-g", "daemon off;"]

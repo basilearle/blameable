@@ -3,6 +3,7 @@ import { OpenAPIHono, OpenAPIObjectConfigure } from '@hono/zod-openapi';
 import { Env } from 'hono';
 import { cors } from 'hono/cors';
 
+import { environment } from '../environment';
 import { blameRouter } from './blame/router';
 import { bootstrapRouter } from './bootstrap/bootstrap';
 import { healthRouter } from './health/router';
@@ -24,15 +25,22 @@ const document: OpenAPIObjectConfigure<Env, '/'> = {
 
 export const apiRouter = new OpenAPIHono();
 
-apiRouter.use(cors());
+if (environment.corsOrigins) {
+  apiRouter.use(cors({
+    origin: environment.corsOrigins,
+    credentials: environment.corsCredentials,
+  }));
+}
 
 apiRouter.route('/blame', blameRouter);
 apiRouter.route('/bootstrap', bootstrapRouter);
 apiRouter.route('/health', healthRouter);
 apiRouter.route('/tokens', tokensRouter);
 
-apiRouter.doc('/doc', document);
+if (environment.apiSpec) {
+  apiRouter.doc('/doc', document);
 
-apiRouter.get('/swagger', swaggerUI({ url: '/api/doc' }));
+  apiRouter.get('/swagger', swaggerUI({ url: '/api/doc' }));
+}
 
 export const API_DOC = apiRouter.getOpenAPIDocument(document);

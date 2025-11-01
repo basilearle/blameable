@@ -11,6 +11,7 @@ export default [
       '**/vite.config.*.timestamp*',
       '**/vitest.config.*.timestamp*',
       '**/test-output',
+      '**/out-tsc',
     ],
   },
   {
@@ -42,6 +43,11 @@ export default [
             ['parent', 'sibling', 'index'],
           ],
           pathGroups: [
+            {
+              pattern: '@blameable/**',
+              group: 'internal',
+              position: 'before',
+            },
             {
               pattern: '**/*.css',
               group: 'index',

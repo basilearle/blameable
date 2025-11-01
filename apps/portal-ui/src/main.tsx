@@ -2,11 +2,12 @@ import "@radix-ui/themes/styles.css";
 
 // ---
 
+import { StrictMode } from 'react';
+import { createRoot } from 'react-dom/client';
+
 import { getBootstrap } from '@blameable/client-codegen/core-api';
 import { client } from '@blameable/client-codegen/core-api/client.gen';
 import { ShellProvider } from '@blameable/client-common';
-import { StrictMode } from 'react';
-import { createRoot } from 'react-dom/client';
 
 import App from './app/App';
 

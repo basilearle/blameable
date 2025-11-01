@@ -1,5 +1,6 @@
-import { getTokensByLocale } from '@blameable/client-codegen/core-api';
 import type { StateCreator } from "zustand/vanilla";
+
+import { getTokensByLocale } from '@blameable/client-codegen/core-api';
 
 import type { BaseState } from "../store";
 

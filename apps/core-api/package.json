@@ -21,6 +21,14 @@
           "cwd": "{projectRoot}"
         }
       },
+      "docker-build": {
+        "executor": "nx:run-commands",
+        "options": {
+          "commands": [
+            "docker build --rm -t blameable/core-api -f apps/core-api/Dockerfile ."
+          ]
+        }
+      },
       "build": {
         "executor": "@nx/esbuild:esbuild",
         "outputs": [

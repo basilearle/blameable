@@ -10,6 +10,7 @@ import { client } from '@blameable/client-codegen/core-api/client.gen';
 import { ShellProvider } from '@blameable/client-common';
 
 import App from './app/App';
+import { environment } from './environment';
 
 // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
 const root = document.querySelector('#root')!;
@@ -21,7 +22,7 @@ const locale = queryParameters.get('locale') ?? undefined;
 
 (async () => {
   client.setConfig({
-    baseUrl: import.meta.env.VITE_API_BASE_URL ?? '/api',
+    baseUrl: environment.apiBaseUrl,
   });
 
   const { data, error } = await getBootstrap({

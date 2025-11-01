@@ -4,6 +4,23 @@
   "private": true,
   "nx": {
     "targets": {
+      "generate-openapi-spec": {
+        "executor": "nx:run-commands",
+        "cache": true,
+        "outputs": ["{workspaceRoot}/libs/client-codegen/specs/core-api-openapi.json"],
+        "options": {
+          "command": "tsx tools/generate-openapi-spec.ts",
+          "cwd": "{projectRoot}"
+        }
+      },
+      "generate-openapi-client": {
+        "executor": "nx:run-commands",
+        "cache": true,
+        "options": {
+          "command": "tsx tools/generate-openapi-client.ts",
+          "cwd": "{projectRoot}"
+        }
+      },
       "build": {
         "executor": "@nx/esbuild:esbuild",
         "outputs": [

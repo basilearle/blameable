@@ -1,0 +1,15 @@
+{
+  "name": "@blameable/client-codegen",
+  "version": "0.0.1",
+  "private": true,
+  "type": "module",
+  "exports": {
+    "./artifacts/core-api": {
+      "types": "./artifacts/core-api/client/index.ts",
+      "import": "./artifacts/core-api/client/index.ts",
+      "default": "./artifacts/core-api/client/index.ts"
+    },
+    "./package.json": "./package.json"
+  },
+  "dependencies": {}
+}

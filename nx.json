@@ -27,7 +27,8 @@
           "buildDepsName": "build-deps",
           "watchDepsName": "watch-deps"
         }
-      }
+      },
+      "exclude": ["libs/client-codegen/*"]
     },
     {
       "plugin": "@nx/eslint/plugin",
@@ -59,6 +60,15 @@
       "plugin": "@nx/jest/plugin",
       "options": {
         "targetName": "test"
+      }
+    },
+    {
+      "plugin": "@nx/js/typescript",
+      "include": ["libs/client-codegen/*"],
+      "options": {
+        "typecheck": {
+          "targetName": "typecheck"
+        }
       }
     }
   ],

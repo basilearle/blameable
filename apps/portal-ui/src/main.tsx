@@ -2,6 +2,7 @@ import "@radix-ui/themes/styles.css";
 
 // ---
 
+// import { createClient } from '@blameable/client-codegen/artifacts/core-api';
 import { ShellProvider } from '@blameable/client-common';
 import { StrictMode } from 'react';
 import { createRoot } from 'react-dom/client';

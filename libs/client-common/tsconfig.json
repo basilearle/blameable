@@ -3,6 +3,9 @@
   "include": [],
   "references": [
     {
+      "path": "../client-codegen"
+    },
+    {
       "path": "./tsconfig.lib.json"
     },
     {

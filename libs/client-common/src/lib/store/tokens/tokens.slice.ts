@@ -1,3 +1,4 @@
+import { getTokensByLocale } from '@blameable/client-codegen/core-api';
 import type { StateCreator } from "zustand/vanilla";
 
 import type { BaseState } from "../store";
@@ -19,16 +20,18 @@ export const createTokenSlice: StateCreator<
   localeOptions: [],
   tokens: {},
   handleLocaleChange: async (locale) => {
-    const body = await fetch(`/api/locale/${locale}`)
-      .then((res) => res.json())
-      .catch(() => null);
+    const { data, error } = await getTokensByLocale({
+      path: {
+        locale,
+      },
+    });
 
-    if (!body?.data?.tokens) return;
+    if (!data || error) return;
 
     set((state) => ({
       ...state,
       currentLocale: locale,
-      tokens: body.data.tokens,
+      tokens: data.tokens,
     }));
   },
 });

@@ -1,3 +1,4 @@
+import { postBlame } from '@blameable/client-codegen/core-api';
 import type { StateCreator } from "zustand/vanilla";
 
 import type { BaseState } from "../store";
@@ -25,7 +26,9 @@ export const createBlameSlice: StateCreator<
       isBlamePending: true,
     }));
 
-    await fetch('/api/blame', { method: 'POST' });
+    const { error } = await postBlame();
+
+    if (error) return;
 
     set((state) => ({
       ...state,

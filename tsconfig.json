@@ -11,6 +11,12 @@
     },
     {
       "path": "./libs/client-common"
+    },
+    {
+      "path": "./apps/core-api"
+    },
+    {
+      "path": "./libs/client-codegen"
     }
   ]
 }

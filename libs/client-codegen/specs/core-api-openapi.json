@@ -1,0 +1,134 @@
+{
+  "openapi": "3.0.0",
+  "info": {
+    "version": "0.0.1",
+    "title": "Blameable Core API"
+  },
+  "servers": [
+    {
+      "url": "/api",
+      "description": "API Base Path"
+    }
+  ],
+  "components": {
+    "schemas": {},
+    "parameters": {}
+  },
+  "paths": {
+    "/blame": {
+      "post": {
+        "description": "assigns blame to the current user",
+        "responses": {
+          "201": {
+            "description": "successfully assigned blame"
+          }
+        }
+      }
+    },
+    "/bootstrap": {
+      "get": {
+        "description": "retrieves the live configuration and language tokens for the client",
+        "parameters": [
+          {
+            "schema": {
+              "type": "string",
+              "example": "en-CA"
+            },
+            "required": false,
+            "name": "locale",
+            "in": "query"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successfully retrieved configurations",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "availableLocales": {
+                      "type": "array",
+                      "items": {
+                        "type": "string"
+                      },
+                      "example": [
+                        "en-CA",
+                        "fr-CA",
+                        "es-MX"
+                      ]
+                    },
+                    "defaultLocale": {
+                      "type": "string",
+                      "example": "en-CA"
+                    },
+                    "tokens": {
+                      "type": "object",
+                      "additionalProperties": {
+                        "type": "string"
+                      }
+                    }
+                  },
+                  "required": [
+                    "availableLocales",
+                    "defaultLocale",
+                    "tokens"
+                  ]
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/health": {
+      "get": {
+        "description": "indicates whether the server is running",
+        "responses": {
+          "200": {
+            "description": "successfully retrieved configurations"
+          }
+        }
+      }
+    },
+    "/tokens/{locale}": {
+      "get": {
+        "description": "retrieves the language tokens for a given locale",
+        "parameters": [
+          {
+            "schema": {
+              "type": "string",
+              "example": "en-CA"
+            },
+            "required": true,
+            "name": "locale",
+            "in": "path"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successfully retrieved tokens",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "tokens": {
+                      "type": "object",
+                      "additionalProperties": {
+                        "type": "string"
+                      }
+                    }
+                  },
+                  "required": [
+                    "tokens"
+                  ]
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}

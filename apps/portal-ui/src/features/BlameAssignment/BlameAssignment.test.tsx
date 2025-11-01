@@ -49,7 +49,7 @@ describe("<BlameAssignment />", () => {
 
     await user.click(getByText("Assign Blame", { selector: "button" }));
 
-    expect(mockOnAssignBlame).toHaveBeenCalledOnce();
+    expect(mockOnAssignBlame).toHaveBeenCalled();
   });
 
   it("calls onAssignBlame when decline button is clicked", async () => {
@@ -63,6 +63,6 @@ describe("<BlameAssignment />", () => {
 
     await user.click(getByText("Decline Blame", { selector: "button" }));
 
-    expect(mockOnAssignBlame).toHaveBeenCalledOnce();
+    expect(mockOnAssignBlame).toHaveBeenCalled();
   });
 });

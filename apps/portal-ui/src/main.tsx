@@ -2,12 +2,13 @@ import "@radix-ui/themes/styles.css";
 
 // ---
 
+import { getBootstrap } from '@blameable/client-codegen/core-api';
+import { client } from '@blameable/client-codegen/core-api/client.gen';
 import { ShellProvider } from '@blameable/client-common';
 import { StrictMode } from 'react';
 import { createRoot } from 'react-dom/client';
 
 import App from './app/App';
-import { worker } from './mocks/browser';
 
 // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
 const root = document.querySelector('#root')!;
@@ -15,35 +16,37 @@ const root = document.querySelector('#root')!;
 const spinner = document.querySelector('#spinner-root')!;
 
 const queryParameters = new URLSearchParams(window.location.search);
-const locale = queryParameters.get('locale');
-const bootstrapDataUrl = new URL('/api/bootstrap', window.location.href);
+const locale = queryParameters.get('locale') ?? undefined;
 
-if (locale) {
-  bootstrapDataUrl.searchParams.set('locale', locale);
-}
+(async () => {
+  client.setConfig({
+    baseUrl: 'http://localhost:3000/api',
+  });
 
-// Start MSW
-worker.start().then(() => {
-  fetch(bootstrapDataUrl)
-    .then(res => res.json())
-    .then((body) => {
-      // remove global spinner
-      spinner.remove();
+  const { data, error } = await getBootstrap({
+    query: {
+      locale,
+    },
+  });
 
-      const config = body.data;
+  if (!data) {
+    throw error;
+  }
 
-      createRoot(root).render(
-        <StrictMode>
-          <ShellProvider
-            defaultStoreProps={{
-              currentLocale: config.defaultLocale,
-              localeOptions: config.availableLocales,
-              tokens: config.tokens,
-            }}
-          >
-            <App />
-          </ShellProvider>
-        </StrictMode>
-      );
-    });
-});
+  // remove global spinner
+  spinner.remove();
+
+  createRoot(root).render(
+    <StrictMode>
+      <ShellProvider
+        defaultStoreProps={{
+          currentLocale: data.defaultLocale,
+          localeOptions: data.availableLocales,
+          tokens: data.tokens,
+        }}
+      >
+        <App />
+      </ShellProvider>
+    </StrictMode>
+  );
+})();

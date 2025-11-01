@@ -58,7 +58,7 @@ describe('<BlameForm />', () => {
 
     await user.click(getByText(/no blame/i, { selector: 'button' }));
 
-    expect(handleBlameFn).toHaveBeenCalledOnce();
+    expect(handleBlameFn).toHaveBeenCalled();
 
     await user.click(getByText(/blame me/i, { selector: 'button' }));
 

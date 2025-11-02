@@ -18,12 +18,5 @@
     {
       "path": "./libs/client-codegen"
     }
-  ],
-  "ts-node": {
-    "compilerOptions": {
-      "module": "commonjs",
-      "moduleResolution": "node10",
-      "customConditions": null
-    }
-  }
+  ]
 }

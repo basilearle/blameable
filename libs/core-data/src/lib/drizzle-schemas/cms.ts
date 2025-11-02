@@ -1,5 +1,5 @@
 import { sql } from 'drizzle-orm';
-import { date, pgTable, uuid } from 'drizzle-orm/pg-core';
+import { json, pgTable, timestamp, uuid } from 'drizzle-orm/pg-core';
 
 import { sitesTable } from './sites';
 
@@ -9,6 +9,7 @@ export const cmsTokensTable = pgTable('cms_tokens', {
     .notNull()
     .unique()
     .references(() => sitesTable.id, { onDelete: 'cascade' }),
-  created_at: date().defaultNow().notNull(),
-  updated_at: date().defaultNow().notNull().$onUpdate(() => sql`CURRENT_TIMESTAMP`),
+  tokens: json().default({}).notNull(),
+  created_at: timestamp().defaultNow().notNull(),
+  updated_at: timestamp().defaultNow().notNull().$onUpdate(() => sql`CURRENT_TIMESTAMP`),
 });

@@ -41,7 +41,7 @@
         ],
         "responses": {
           "200": {
-            "description": "successfully retrieved configurations",
+            "description": "successfully retrieved site configurations",
             "content": {
               "application/json": {
                 "schema": {
@@ -77,6 +77,9 @@
                 }
               }
             }
+          },
+          "400": {
+            "description": "unable to retrieve site retrieved configurations"
           }
         }
       }
@@ -126,6 +129,9 @@
                 }
               }
             }
+          },
+          "404": {
+            "description": "unable to retrieve tokens for locale"
           }
         }
       }

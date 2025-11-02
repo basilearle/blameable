@@ -2,7 +2,7 @@
 
 import type { Client, Options as Options2, TDataShape } from './client';
 import { client } from './client.gen';
-import type { GetBootstrapData, GetBootstrapResponses, GetHealthData, GetHealthResponses, GetTokensByLocaleData, GetTokensByLocaleResponses, PostBlameData, PostBlameResponses } from './types.gen';
+import type { GetBootstrapData, GetBootstrapErrors, GetBootstrapResponses, GetHealthData, GetHealthResponses, GetTokensByLocaleData, GetTokensByLocaleErrors, GetTokensByLocaleResponses, PostBlameData, PostBlameResponses } from './types.gen';
 
 export type Options<TData extends TDataShape = TDataShape, ThrowOnError extends boolean = boolean> = Options2<TData, ThrowOnError> & {
     /**
@@ -32,7 +32,7 @@ export const postBlame = <ThrowOnError extends boolean = false>(options?: Option
  * retrieves the live configuration and language tokens for the client
  */
 export const getBootstrap = <ThrowOnError extends boolean = false>(options?: Options<GetBootstrapData, ThrowOnError>) => {
-    return (options?.client ?? client).get<GetBootstrapResponses, unknown, ThrowOnError>({
+    return (options?.client ?? client).get<GetBootstrapResponses, GetBootstrapErrors, ThrowOnError>({
         url: '/bootstrap',
         ...options
     });
@@ -52,7 +52,7 @@ export const getHealth = <ThrowOnError extends boolean = false>(options?: Option
  * retrieves the language tokens for a given locale
  */
 export const getTokensByLocale = <ThrowOnError extends boolean = false>(options: Options<GetTokensByLocaleData, ThrowOnError>) => {
-    return (options.client ?? client).get<GetTokensByLocaleResponses, unknown, ThrowOnError>({
+    return (options.client ?? client).get<GetTokensByLocaleResponses, GetTokensByLocaleErrors, ThrowOnError>({
         url: '/tokens/{locale}',
         ...options
     });

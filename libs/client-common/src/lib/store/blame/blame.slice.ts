@@ -27,14 +27,21 @@ export const createBlameSlice: StateCreator<
       isBlamePending: true,
     }));
 
-    const { error } = await postBlame();
+    const { error } = await postBlame().catch((error) => {
+      console.error(error);
+      return { error };
+    });
+
+    set((state) => ({
+      ...state,
+      isBlamePending: false,
+    }));
 
     if (error) return;
 
     set((state) => ({
       ...state,
       blameCount: state.blameCount + 1,
-      isBlamePending: false,
     }));
   },
 });

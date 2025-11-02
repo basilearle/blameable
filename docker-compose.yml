@@ -2,6 +2,8 @@ services:
   blameable-portal-ui:
     container_name: blameable-portal-ui
     image: blameable/portal-ui
+    depends_on:
+      - blameable-core-api
     restart: unless-stopped
     ports:
       - "8080:80"
@@ -10,6 +12,21 @@ services:
   blameable-core-api:
     container_name: blameable-core-api
     image: blameable/core-api
+    depends_on:
+      - blameable-core-db
     restart: unless-stopped
     ports:
       - "3000:3000"
+    env_file:
+      - .env.docker-compose
+  blameable-core-db:
+    container_name: blameable-core-db
+    image: postgres:17-alpine
+    restart: unless-stopped
+    ports:
+      - "5432:5432"
+    env_file:
+      - .env.docker-compose
+    volumes:
+      - ./libs/core-data/pg_data:/var/lib/postgresql/data
+      - ./libs/core-data/init.sql:/docker-entrypoint-initdb.d/init.sql

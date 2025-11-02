@@ -5,6 +5,7 @@ declare global {
       PORT?: string;
       CORS_ORIGINS?: string;
       CORS_CREDENTIALS?: string;
+      DATABASE_URL: string;
     }
   }
 }

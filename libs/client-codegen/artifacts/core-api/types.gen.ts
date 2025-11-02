@@ -27,9 +27,16 @@ export type GetBootstrapData = {
     url: '/bootstrap';
 };
 
+export type GetBootstrapErrors = {
+    /**
+     * unable to retrieve site retrieved configurations
+     */
+    400: unknown;
+};
+
 export type GetBootstrapResponses = {
     /**
-     * successfully retrieved configurations
+     * successfully retrieved site configurations
      */
     200: {
         availableLocales: Array<string>;
@@ -63,6 +70,13 @@ export type GetTokensByLocaleData = {
     };
     query?: never;
     url: '/tokens/{locale}';
+};
+
+export type GetTokensByLocaleErrors = {
+    /**
+     * unable to retrieve tokens for locale
+     */
+    404: unknown;
 };
 
 export type GetTokensByLocaleResponses = {

@@ -4,9 +4,6 @@
   "include": [],
   "references": [
     {
-      "path": "../../libs/core-data"
-    },
-    {
       "path": "./tsconfig.app.json"
     },
     {

@@ -14,6 +14,31 @@
       "default": "./dist/index.js"
     }
   },
+  "nx": {
+    "targets": {
+      "drizzle-push": {
+        "executor": "nx:run-commands",
+        "options": {
+          "command": "drizzle-kit push",
+          "cwd": "libs/core-data"
+        }
+      },
+      "drizzle-migrate": {
+        "executor": "nx:run-commands",
+        "options": {
+          "command": "drizzle-kit migrate",
+          "cwd": "libs/core-data"
+        }
+      },
+      "drizzle-generate": {
+        "executor": "nx:run-commands",
+        "options": {
+          "command": "drizzle-kit generate",
+          "cwd": "libs/core-data"
+        }
+      }
+    }
+  },
   "dependencies": {
     "tslib": "^2.3.0"
   }

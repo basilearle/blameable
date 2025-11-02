@@ -5,7 +5,7 @@ export const sitesTable = pgTable('sites', {
   id: uuid().primaryKey().defaultRandom(),
   name: varchar({ length: 50, }).notNull(),
   default_locale: char({ length: 5, }).notNull(),
-  configured_locales: char({ length: 5, }).array().default([]),
+  configured_locales: char({ length: 5, }).array().default([]).notNull(),
   created_at: timestamp().defaultNow().notNull(),
   updated_at: timestamp().defaultNow().notNull().$onUpdate(() => sql`CURRENT_TIMESTAMP`),
 });

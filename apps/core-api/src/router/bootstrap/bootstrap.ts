@@ -62,7 +62,7 @@ bootstrapRouter.openapi(bootstrapGetRoute, async (c) => {
   }
 
   // if locale is passed, and it's supported, use it, otherwise use the default locale
-  const defaultLocale = locale && config.availableLocales?.includes(locale)
+  const defaultLocale = locale && config.availableLocales.includes(locale)
     ? locale
     : config.defaultLocale;
 

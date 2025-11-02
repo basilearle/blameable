@@ -4,9 +4,13 @@ import { config } from 'dotenv';
 
 import { environment } from './environment';
 import { apiRouter } from './router/router';
+import { CoreDataClientService } from './services/core-data-client/CoreDataClientService';
 
 // Load environment variables
 config();
+
+// Initialize core data connection pool
+CoreDataClientService.initialize();
 
 const app = new OpenAPIHono();
 

@@ -1,5 +1,6 @@
 import { createRoute, OpenAPIHono, z } from '@hono/zod-openapi';
 
+import { environment } from '../../environment';
 import { tokenService } from '../../services/tokens/TokenService';
 
 export const tokensRouter = new OpenAPIHono();
@@ -34,13 +35,20 @@ const tokensGetRoute = createRoute({
         },
       },
     },
+    404: {
+      description: 'unable to retrieve tokens for locale',
+    },
   },
 });
 
-tokensRouter.openapi(tokensGetRoute, (c) => {
+tokensRouter.openapi(tokensGetRoute, async (c) => {
   const { locale } = c.req.valid('param');
 
-  const tokens = tokenService.getTokensForLocale(locale);
+  const tokens = await tokenService.getTokensForLocale(environment.siteId, locale);
+
+  if (!tokens) {
+    return c.json(null, 404);
+  }
 
   return c.json({
     tokens,

@@ -47,5 +47,8 @@ vite.config.*.timestamp*
 vitest.config.*.timestamp*
 test-output
 
-
+# storybook
 storybook-static
+
+# postgres
+pg_data

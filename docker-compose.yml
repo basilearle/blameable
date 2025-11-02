@@ -13,3 +13,14 @@ services:
     restart: unless-stopped
     ports:
       - "3000:3000"
+  blameable-core-db:
+    container_name: blameable-core-db
+    image: postgres:17-alpine
+    restart: unless-stopped
+    ports:
+      - "5432:5432"
+    env_file:
+      - .env
+    volumes:
+      - ./libs/core-data/pg_data:/var/lib/postgresql/data
+      - ./libs/core-data/init.sql:/docker-entrypoint-initdb.d/init.sql

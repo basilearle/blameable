@@ -18,4 +18,6 @@ module.exports = {
   },
   moduleFileExtensions: ['ts', 'js', 'html'],
   coverageDirectory: 'test-output/jest/coverage',
+  // NOTE: at this point `core-data` doesn't contain anything testable, just schemas and configs
+  passWithNoTests: true,
 };

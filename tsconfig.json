@@ -20,6 +20,12 @@
     },
     {
       "path": "./libs/core-data"
+    },
+    {
+      "path": "./apps/admin-ui-e2e"
+    },
+    {
+      "path": "./apps/admin-ui"
     }
   ]
 }

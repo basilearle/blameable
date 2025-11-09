@@ -6,11 +6,11 @@ export default defineConfig(() => ({
   root: __dirname,
   cacheDir: '../../node_modules/.vite/apps/admin-ui',
   server: {
-    port: 4300,
+    port: 4201,
     host: 'localhost',
   },
   preview: {
-    port: 4300,
+    port: 4301,
     host: 'localhost',
   },
   plugins: [react()],

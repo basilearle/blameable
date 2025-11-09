@@ -1,6 +1,7 @@
-import { createBrowserRouter } from 'react-router';
+import { lazy } from 'react';
+import { createBrowserRouter, Outlet } from 'react-router';
 
-import { LoginRoute } from './routes/LoginRoute';
+import { CenteredLayout } from '@blameable/client-common';
 
 export const adminRouter = createBrowserRouter([
   {
@@ -8,7 +9,17 @@ export const adminRouter = createBrowserRouter([
     element: <div>Hello World</div>,
   },
   {
-    path: '/login',
-    Component: LoginRoute,
-  }
+    path: 'auth',
+    element: (
+      <CenteredLayout>
+        <Outlet />
+      </CenteredLayout>
+    ),
+    children: [
+      {
+        path: 'login',
+        Component: lazy(() => import('./routes/LoginRoute/LoginRoute')),
+      },
+    ],
+  },
 ]);

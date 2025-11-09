@@ -25,7 +25,7 @@ export function LoginRoute() {
   };
 
   return (
-    <Box m="4" maxWidth="420px">
+    <Box m="4" minWidth="368px" maxWidth="420px">
       <Card size="2">
         <Heading as="h2" my="2" size="6">Blameable Login</Heading>
 

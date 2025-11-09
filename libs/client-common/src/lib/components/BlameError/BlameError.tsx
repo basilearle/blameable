@@ -1,5 +1,7 @@
 import {Box, Button, Card, Flex, Heading, Text} from "@radix-ui/themes";
 
+import { CenteredLayout } from '../../layouts';
+
 export type BlameErrorProps = {
   title?: string;
   description?: string;
@@ -18,12 +20,7 @@ export function BlameError({
   };
 
   return (
-    <Flex
-      direction="column"
-      align="center"
-      justify="center"
-      height="100dvh"
-    >
+    <CenteredLayout>
       <Box width="460px">
         <Card size="3">
           <Heading mb="4">{title}</Heading>
@@ -36,7 +33,7 @@ export function BlameError({
           </Flex>
         </Card>
       </Box>
-    </Flex>
+    </CenteredLayout>
   );
 }
 

@@ -4,6 +4,7 @@ import { Env } from 'hono';
 import { cors } from 'hono/cors';
 
 import { environment } from '../environment';
+import { authRouter } from './auth/router';
 import { blameRouter } from './blame/router';
 import { bootstrapRouter } from './bootstrap/bootstrap';
 import { healthRouter } from './health/router';
@@ -27,11 +28,14 @@ export const apiRouter = new OpenAPIHono();
 
 if (environment.corsOrigins) {
   apiRouter.use(cors({
-    origin: environment.corsOrigins,
+    allowHeaders: ['Content-Type', 'Authorization'],
     credentials: environment.corsCredentials,
+    exposeHeaders: ['Content-Length'],
+    origin: environment.corsOrigins,
   }));
 }
 
+apiRouter.route('/auth', authRouter);
 apiRouter.route('/blame', blameRouter);
 apiRouter.route('/bootstrap', bootstrapRouter);
 apiRouter.route('/health', healthRouter);

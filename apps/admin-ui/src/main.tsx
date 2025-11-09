@@ -4,7 +4,8 @@ import "@radix-ui/themes/styles.css";
 
 import { StrictMode } from 'react';
 import * as ReactDOM from 'react-dom/client';
-import { BrowserRouter } from 'react-router';
+
+import { ShellProvider } from '@blameable/client-common';
 
 import App from './app/App';
 
@@ -14,8 +15,14 @@ const root = ReactDOM.createRoot(
 
 root.render(
   <StrictMode>
-    <BrowserRouter>
+    <ShellProvider
+      defaultStoreProps={{
+        currentLocale: 'en-CA',
+        localeOptions: [ 'en-CA' ],
+        tokens: {},
+      }}
+    >
       <App />
-    </BrowserRouter>
+    </ShellProvider>
   </StrictMode>
 );

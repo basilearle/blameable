@@ -1,5 +1,17 @@
 {
   "name": "@blameable/admin-ui",
   "version": "0.0.1",
-  "private": true
+  "private": true,
+  "nx": {
+    "targets": {
+      "docker-build": {
+        "executor": "nx:run-commands",
+        "options": {
+          "commands": [
+            "docker build --rm -t blameable/admin-ui -f apps/admin-ui/Dockerfile ."
+          ]
+        }
+      }
+    }
+  }
 }

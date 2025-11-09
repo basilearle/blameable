@@ -9,6 +9,16 @@ services:
       - "8080:80"
     environment:
       - API_URL=blameable-core-api:3000
+  blameable-admin-ui:
+    container_name: blameable-admin-ui
+    image: blameable/admin-ui
+    depends_on:
+      - blameable-core-api
+    restart: unless-stopped
+    ports:
+      - "8081:80"
+    environment:
+      - API_URL=blameable-core-api:3000
   blameable-core-api:
     container_name: blameable-core-api
     image: blameable/core-api

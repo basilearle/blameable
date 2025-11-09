@@ -8,7 +8,7 @@ import {
 } from '@radix-ui/themes';
 import { Button } from '@radix-ui/themes';
 import { useForm } from 'react-hook-form';
-import { Link } from 'react-router';
+import { Link, useNavigate } from 'react-router';
 
 import { authClient } from '../../auth';
 
@@ -18,10 +18,13 @@ export type LoginRouteForm = {
 };
 
 export function LoginRoute() {
+  const navigate = useNavigate();
   const { register, handleSubmit, formState } = useForm<LoginRouteForm>();
 
   const handleLoginSubmit = async (payload: LoginRouteForm) => {
     await authClient.signIn.email(payload);
+
+    navigate('/dashboard', { replace: true });
   };
 
   return (
@@ -35,7 +38,7 @@ export function LoginRoute() {
             <TextField.Root
               my="2"
               size="3"
-              placeholder="cooldude@blameable.me"
+              placeholder="you@blameable.me"
               {...register('email', {
                 required: true,
                 pattern: /^[^@]+@[^@]+\.[^@]+$/i
@@ -43,7 +46,7 @@ export function LoginRoute() {
             />
 
             {formState.errors.email && (
-              <Text color="red">BAD EMAIl.</Text>
+              <Text color="red">BAD EMAIL.</Text>
             )}
           </Box>
 
@@ -55,6 +58,7 @@ export function LoginRoute() {
               placeholder="password"
               type="password"
               {...register('password', {
+                required: true,
                 minLength: 8,
               })}
             />

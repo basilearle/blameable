@@ -7,7 +7,7 @@ export async function loginRouteLoader() {
     const session = await authClient.getSession();
 
     if (session.data) {
-      return redirect('/portal');
+      return redirect('/dashboard');
     }
 
   } catch (error) {

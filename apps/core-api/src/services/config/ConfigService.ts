@@ -1,17 +1,13 @@
 import { eq } from 'drizzle-orm';
 
-import { type Database, sitesTable } from '@blameable/core-data';
+import { sitesTable } from '@blameable/core-data';
 
-import { CoreDataClientService } from '../core-data-client/CoreDataClientService';
+import { db } from '../../clients/db';
 
 export class ConfigService {
 
-  private get db(): Database {
-    return CoreDataClientService.getDatabase();
-  }
-
   async getConfigForSite(siteId: string) {
-    const siteConfig = await this.db.query.sitesTable.findFirst({
+    const siteConfig = await db.query.sitesTable.findFirst({
       where: eq(sitesTable.id, siteId)
     });
 

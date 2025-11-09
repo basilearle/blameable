@@ -1,17 +1,13 @@
 import { eq } from 'drizzle-orm';
 
-import { cmsTokensTable, type Database } from '@blameable/core-data';
+import { cmsTokensTable } from '@blameable/core-data';
 
-import { CoreDataClientService } from '../core-data-client/CoreDataClientService';
+import { db } from '../../clients/db';
 
 export class TokenService {
 
-  private get db(): Database {
-    return CoreDataClientService.getDatabase();
-  }
-
   async getTokensForLocale(siteId: string, locale: string) {
-    const tokenEntry = await this.db.query.cmsTokensTable.findFirst({
+    const tokenEntry = await db.query.cmsTokensTable.findFirst({
       where: eq(cmsTokensTable.site_id, siteId)
     });
 

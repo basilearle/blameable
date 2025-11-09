@@ -3,8 +3,8 @@ import { eq } from 'drizzle-orm';
 
 import { sitesTable, usersToSitesTable } from '@blameable/core-data';
 
+import { db } from '../../../clients/db';
 import { UserGuardVariables } from '../../../middleware/userGuard';
-import { CoreDataClientService } from '../../../services/core-data-client/CoreDataClientService';
 
 export const adminSitesRouter = new OpenAPIHono<{ Variables: UserGuardVariables }>();
 
@@ -37,8 +37,6 @@ const adminSitesGetRoute = createRoute({
 
 adminSitesRouter.openapi(adminSitesGetRoute, async (c) => {
   const userId = c.get('userId');
-
-  const db = CoreDataClientService.getDatabase();
 
   // Query sites associated with the user through the junction table
   const sitesForUser = await db

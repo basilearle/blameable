@@ -2,19 +2,15 @@ import { Hono } from 'hono';
 
 import { userGuard, UserGuardVariables } from './userGuard';
 
-jest.mock('@blameable/core-data', () => ({
-  createBetterAuthPool: jest.fn(),
+jest.mock('../../clients/db', () => ({
+  db: {},
 }));
 
-jest.mock('../../services/core-data-client/CoreDataClientService', () => ({
-  CoreDataClientService: {
-    getDatabase: jest.fn(),
-  },
-}));
-
-jest.mock('../../environment', () => ({
-  environment: {
-    corsOrigins: ['http://localhost:3000'],
+jest.mock('../../clients/auth', () => ({
+  auth: {
+    api: {
+      getSession: jest.fn(),
+    },
   },
 }));
 
@@ -22,7 +18,7 @@ describe('userGuard', () => {
   let app: Hono<{ Variables: UserGuardVariables }>;
   let mockGetSession: jest.Mock;
 
-  beforeEach(async () => {
+  beforeEach(() => {
     // Reset mocks
     jest.clearAllMocks();
 
@@ -36,14 +32,9 @@ describe('userGuard', () => {
       });
     });
 
-    // Setup the mock getSession function
-    mockGetSession = jest.fn();
-    const { createBetterAuthPool } = await import('@blameable/core-data');
-    (createBetterAuthPool as jest.Mock).mockReturnValue({
-      api: {
-        getSession: mockGetSession,
-      },
-    } as any);
+    // Get the mocked getSession function from the mocked module
+    const { auth } = require('../../clients/auth');
+    mockGetSession = auth.api.getSession as jest.Mock;
   });
 
   describe('when session is valid and not expired', () => {

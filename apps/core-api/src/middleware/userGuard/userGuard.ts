@@ -1,9 +1,6 @@
 import { createMiddleware } from 'hono/factory';
 
-import { createBetterAuthPool } from '@blameable/core-data';
-
-import { environment } from '../../environment';
-import { CoreDataClientService } from '../../services/core-data-client/CoreDataClientService';
+import { auth } from '../../clients/auth';
 
 export type UserGuardVariables = {
   userId: string;
@@ -17,11 +14,6 @@ export type UserGuardVariables = {
  */
 export const userGuard = createMiddleware<{ Variables: UserGuardVariables }>(
   async (c, next) => {
-    const auth = createBetterAuthPool(
-      CoreDataClientService.getDatabase(),
-      environment.corsOrigins
-    );
-
     const session = await auth.api.getSession({
       headers: c.req.raw.headers,
     });

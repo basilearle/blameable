@@ -1,15 +1,11 @@
-import { blameRegisterTable, Database } from '@blameable/core-data';
+import { blameRegisterTable } from '@blameable/core-data';
 
-import { CoreDataClientService } from '../core-data-client/CoreDataClientService';
+import { db } from '../../clients/db';
 
 export class BlameService {
 
-  private get db(): Database {
-    return CoreDataClientService.getDatabase();
-  }
-
   async assignBlame(siteId: string, ipAddress: string) {
-    await this.db.insert(blameRegisterTable).values({
+    await db.insert(blameRegisterTable).values({
       site_id: siteId,
       ip_address: ipAddress,
     });

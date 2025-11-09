@@ -1,13 +1,21 @@
-import { render } from '@testing-library/react';
+import { render, waitFor } from '@testing-library/react';
+import { createMemoryRouter, RouterProvider } from 'react-router';
 
-import App from './App';
+import { adminRouter } from '../router';
 
 describe('<App />', () => {
-  it('should render successfully', () => {
+  it('should render successfully', async () => {
+    const testRouter = createMemoryRouter(adminRouter.routes, {
+      initialEntries: ['/auth'],
+    });
+
     const { baseElement } = render(
-      <App />
+      <RouterProvider router={testRouter} />
     );
 
-    expect(baseElement).toBeTruthy();
+    // NOTE: don't like that this wait for is necessary here.
+    await waitFor(() => {
+      expect(baseElement).toBeTruthy();
+    });
   });
 });

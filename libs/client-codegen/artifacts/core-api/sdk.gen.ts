@@ -2,7 +2,7 @@
 
 import type { Client, Options as Options2, TDataShape } from './client';
 import { client } from './client.gen';
-import type { GetBootstrapData, GetBootstrapErrors, GetBootstrapResponses, GetHealthData, GetHealthResponses, GetTokensByLocaleData, GetTokensByLocaleErrors, GetTokensByLocaleResponses, PostBlameData, PostBlameResponses } from './types.gen';
+import type { GetAdminSitesData, GetAdminSitesResponses, GetBootstrapData, GetBootstrapErrors, GetBootstrapResponses, GetHealthData, GetHealthResponses, GetTokensByLocaleData, GetTokensByLocaleErrors, GetTokensByLocaleResponses, PostBlameData, PostBlameResponses } from './types.gen';
 
 export type Options<TData extends TDataShape = TDataShape, ThrowOnError extends boolean = boolean> = Options2<TData, ThrowOnError> & {
     /**
@@ -16,6 +16,16 @@ export type Options<TData extends TDataShape = TDataShape, ThrowOnError extends 
      * used to access values that aren't defined as part of the SDK function.
      */
     meta?: Record<string, unknown>;
+};
+
+/**
+ * gets the sites assigned to the logged in user
+ */
+export const getAdminSites = <ThrowOnError extends boolean = false>(options?: Options<GetAdminSitesData, ThrowOnError>) => {
+    return (options?.client ?? client).get<GetAdminSitesResponses, unknown, ThrowOnError>({
+        url: '/admin/sites',
+        ...options
+    });
 };
 
 /**

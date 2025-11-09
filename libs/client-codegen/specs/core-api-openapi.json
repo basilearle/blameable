@@ -15,6 +15,57 @@
     "parameters": {}
   },
   "paths": {
+    "/admin/sites": {
+      "get": {
+        "description": "gets the sites assigned to the logged in user",
+        "responses": {
+          "200": {
+            "description": "found a list of sites",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "sites": {
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "id": {
+                            "type": "string"
+                          },
+                          "name": {
+                            "type": "string"
+                          },
+                          "defaultLocale": {
+                            "type": "string"
+                          },
+                          "configuredLocales": {
+                            "type": "array",
+                            "items": {
+                              "type": "string"
+                            }
+                          }
+                        },
+                        "required": [
+                          "id",
+                          "name",
+                          "defaultLocale",
+                          "configuredLocales"
+                        ]
+                      }
+                    }
+                  },
+                  "required": [
+                    "sites"
+                  ]
+                }
+              }
+            }
+          }
+        }
+      }
+    },
     "/blame": {
       "post": {
         "description": "assigns blame to the current user",

@@ -22,7 +22,6 @@ export function LoginRoute() {
 
   const handleLoginSubmit = async (payload: LoginRouteForm) => {
     await authClient.signIn.email(payload);
-
   };
 
   return (
@@ -54,6 +53,7 @@ export function LoginRoute() {
               my="2"
               size="3"
               placeholder="password"
+              type="password"
               {...register('password', {
                 minLength: 8,
               })}

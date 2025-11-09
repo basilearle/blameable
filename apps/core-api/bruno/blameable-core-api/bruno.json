@@ -1,0 +1,9 @@
+{
+  "version": "1",
+  "name": "blameable-core-api",
+  "type": "collection",
+  "ignore": [
+    "node_modules",
+    ".git"
+  ]
+}

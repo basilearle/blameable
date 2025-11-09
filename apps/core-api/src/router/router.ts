@@ -31,7 +31,16 @@ if (environment.corsOrigins) {
     allowHeaders: ['Content-Type', 'Authorization'],
     credentials: environment.corsCredentials,
     exposeHeaders: ['Content-Length'],
-    origin: environment.corsOrigins,
+    origin: (origin) => {
+      // allow requests with no origin (like mobile apps or curl requests)
+      if (!origin) return environment.corsOrigins?.[0] ?? '';
+
+      if (environment.corsOrigins?.includes(origin)) {
+        return origin;
+      }
+
+      return '';
+    },
   }));
 }
 

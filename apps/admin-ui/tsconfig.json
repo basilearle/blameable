@@ -6,6 +6,9 @@
       "path": "../../libs/client-common"
     },
     {
+      "path": "../../libs/client-codegen"
+    },
+    {
       "path": "./tsconfig.app.json"
     },
     {

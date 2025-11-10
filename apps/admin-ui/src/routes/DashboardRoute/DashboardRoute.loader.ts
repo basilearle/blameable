@@ -1,5 +1,7 @@
 import { redirect } from 'react-router';
 
+import { getAdminSites } from '@blameable/client-codegen/core-api';
+
 import { authClient } from '../../auth';
 
 export async function dashboardRouteLoader() {
@@ -10,7 +12,12 @@ export async function dashboardRouteLoader() {
       throw redirect('/auth');
     }
 
-    return session.data;
+    const { data } = await getAdminSites();
+
+    return {
+      session: session.data,
+      data,
+    };
   } catch (error) {
     if (error instanceof Response) {
       throw error;
@@ -19,3 +26,5 @@ export async function dashboardRouteLoader() {
     throw redirect('/auth');
   }
 }
+
+export type DashboardLoaderData = Awaited<ReturnType<typeof dashboardRouteLoader>>;

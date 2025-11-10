@@ -4,6 +4,29 @@ export type ClientOptions = {
     baseUrl: `${string}://${string}/api` | (string & {});
 };
 
+export type GetAdminSitesData = {
+    body?: never;
+    path?: never;
+    query?: never;
+    url: '/admin/sites';
+};
+
+export type GetAdminSitesResponses = {
+    /**
+     * found a list of sites
+     */
+    200: {
+        sites: Array<{
+            id: string;
+            name: string;
+            defaultLocale: string;
+            configuredLocales: Array<string>;
+        }>;
+    };
+};
+
+export type GetAdminSitesResponse = GetAdminSitesResponses[keyof GetAdminSitesResponses];
+
 export type PostBlameData = {
     body?: never;
     path?: never;

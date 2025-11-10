@@ -4,6 +4,7 @@ import { Env } from 'hono';
 import { cors } from 'hono/cors';
 
 import { environment } from '../environment';
+import { adminRouter } from './admin/router';
 import { authRouter } from './auth/router';
 import { blameRouter } from './blame/router';
 import { bootstrapRouter } from './bootstrap/bootstrap';
@@ -44,6 +45,7 @@ if (environment.corsOrigins) {
   }));
 }
 
+apiRouter.route('/admin', adminRouter);
 apiRouter.route('/auth', authRouter);
 apiRouter.route('/blame', blameRouter);
 apiRouter.route('/bootstrap', bootstrapRouter);

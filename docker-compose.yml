@@ -9,6 +9,7 @@ services:
       - "8080:80"
     environment:
       - API_URL=blameable-core-api:3000
+      - API_SITE_ID=effa29b5-6e0e-4ea4-9ffc-5f826170fe09
   blameable-admin-ui:
     container_name: blameable-admin-ui
     image: blameable/admin-ui

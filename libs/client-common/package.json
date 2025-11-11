@@ -10,5 +10,19 @@
       "default": "./src/index.ts"
     },
     "./package.json": "./package.json"
+  },
+  "nx": {
+    "targets": {
+      "storybook": {
+        "options": {
+          "port": 4402
+        }
+      },
+      "static-storybook": {
+        "options": {
+          "port": 4402
+        }
+      }
+    }
   }
 }

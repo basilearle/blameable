@@ -3,7 +3,7 @@ import { createRoute, OpenAPIHono, z } from '@hono/zod-openapi';
 import { environment } from '../../../environment';
 import { tokenService } from '../../../services/tokens/TokenService';
 
-export const tokensRouter = new OpenAPIHono();
+export const clientTokensRouter = new OpenAPIHono();
 
 const TokensGetParams = z.object({
   locale: z.string().openapi({
@@ -41,7 +41,7 @@ const tokensGetRoute = createRoute({
   },
 });
 
-tokensRouter.openapi(tokensGetRoute, async (c) => {
+clientTokensRouter.openapi(tokensGetRoute, async (c) => {
   const { locale } = c.req.valid('param');
 
   const tokens = await tokenService.getTokensForLocale(environment.siteId, locale);

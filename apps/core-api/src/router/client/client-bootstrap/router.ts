@@ -4,7 +4,7 @@ import { environment } from '../../../environment';
 import { configService } from '../../../services/config/ConfigService';
 import { tokenService } from '../../../services/tokens/TokenService';
 
-export const bootstrapRouter = new OpenAPIHono();
+export const clientBootstrapRouter = new OpenAPIHono();
 
 const BootstrapGetParams = z.object({
   locale: z.string().optional().openapi({
@@ -52,7 +52,7 @@ const bootstrapGetRoute = createRoute({
   },
 });
 
-bootstrapRouter.openapi(bootstrapGetRoute, async (c) => {
+clientBootstrapRouter.openapi(bootstrapGetRoute, async (c) => {
   const { locale } = c.req.valid('query');
 
   const config = await configService.getConfigForSite(environment.siteId);

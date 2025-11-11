@@ -13,6 +13,14 @@
   },
   "nx": {
     "targets": {
+      "docker-build": {
+        "executor": "nx:run-commands",
+        "options": {
+          "commands": [
+            "docker build --rm -t blameable/storybook -f libs/storybook-composer/Dockerfile ."
+          ]
+        }
+      },
       "storybook": {
         "options": {
           "port": 4403

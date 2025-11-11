@@ -41,3 +41,12 @@ services:
     volumes:
       - ./libs/core-data/pg_data:/var/lib/postgresql/data
       - ./libs/core-data/init.sql:/docker-entrypoint-initdb.d/init.sql
+  blameable-storybook:
+    container_name: blameable-storybook
+    image: blameable/storybook
+    restart: unless-stopped
+    ports:
+      - "4400:4400"
+      - "4401:4401"
+      - "4402:4402"
+      - "4403:4403"

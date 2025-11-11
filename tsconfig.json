@@ -26,6 +26,9 @@
     },
     {
       "path": "./apps/admin-ui"
+    },
+    {
+      "path": "./libs/storybook-composer"
     }
   ],
   "ts-node": {

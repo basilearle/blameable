@@ -1,6 +1,6 @@
 import type { StateCreator } from "zustand/vanilla";
 
-import { postBlame } from '@blameable/client-codegen/core-api';
+import { postClientBlame } from '@blameable/client-codegen/core-api';
 
 import type { BaseState } from "../store";
 
@@ -27,7 +27,7 @@ export const createBlameSlice: StateCreator<
       isBlamePending: true,
     }));
 
-    const { error } = await postBlame().catch((error) => {
+    const { error } = await postClientBlame().catch((error) => {
       console.error(error);
       return { error };
     });

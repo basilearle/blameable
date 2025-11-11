@@ -66,7 +66,7 @@
         }
       }
     },
-    "/blame": {
+    "/client/blame": {
       "post": {
         "description": "assigns blame to the current user",
         "responses": {
@@ -76,7 +76,7 @@
         }
       }
     },
-    "/bootstrap": {
+    "/client/bootstrap": {
       "get": {
         "description": "retrieves the live configuration and language tokens for the client",
         "parameters": [
@@ -135,17 +135,7 @@
         }
       }
     },
-    "/health": {
-      "get": {
-        "description": "indicates whether the server is running",
-        "responses": {
-          "200": {
-            "description": "successfully retrieved configurations"
-          }
-        }
-      }
-    },
-    "/tokens/{locale}": {
+    "/client/tokens/{locale}": {
       "get": {
         "description": "retrieves the language tokens for a given locale",
         "parameters": [
@@ -183,6 +173,16 @@
           },
           "404": {
             "description": "unable to retrieve tokens for locale"
+          }
+        }
+      }
+    },
+    "/health": {
+      "get": {
+        "description": "indicates whether the server is running",
+        "responses": {
+          "200": {
+            "description": "successfully retrieved configurations"
           }
         }
       }

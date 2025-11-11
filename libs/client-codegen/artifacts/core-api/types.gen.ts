@@ -27,37 +27,37 @@ export type GetAdminSitesResponses = {
 
 export type GetAdminSitesResponse = GetAdminSitesResponses[keyof GetAdminSitesResponses];
 
-export type PostBlameData = {
+export type PostClientBlameData = {
     body?: never;
     path?: never;
     query?: never;
-    url: '/blame';
+    url: '/client/blame';
 };
 
-export type PostBlameResponses = {
+export type PostClientBlameResponses = {
     /**
      * successfully assigned blame
      */
     201: unknown;
 };
 
-export type GetBootstrapData = {
+export type GetClientBootstrapData = {
     body?: never;
     path?: never;
     query?: {
         locale?: string;
     };
-    url: '/bootstrap';
+    url: '/client/bootstrap';
 };
 
-export type GetBootstrapErrors = {
+export type GetClientBootstrapErrors = {
     /**
      * unable to retrieve site retrieved configurations
      */
     400: unknown;
 };
 
-export type GetBootstrapResponses = {
+export type GetClientBootstrapResponses = {
     /**
      * successfully retrieved site configurations
      */
@@ -70,7 +70,36 @@ export type GetBootstrapResponses = {
     };
 };
 
-export type GetBootstrapResponse = GetBootstrapResponses[keyof GetBootstrapResponses];
+export type GetClientBootstrapResponse = GetClientBootstrapResponses[keyof GetClientBootstrapResponses];
+
+export type GetClientTokensByLocaleData = {
+    body?: never;
+    path: {
+        locale: string;
+    };
+    query?: never;
+    url: '/client/tokens/{locale}';
+};
+
+export type GetClientTokensByLocaleErrors = {
+    /**
+     * unable to retrieve tokens for locale
+     */
+    404: unknown;
+};
+
+export type GetClientTokensByLocaleResponses = {
+    /**
+     * successfully retrieved tokens
+     */
+    200: {
+        tokens: {
+            [key: string]: string;
+        };
+    };
+};
+
+export type GetClientTokensByLocaleResponse = GetClientTokensByLocaleResponses[keyof GetClientTokensByLocaleResponses];
 
 export type GetHealthData = {
     body?: never;
@@ -85,32 +114,3 @@ export type GetHealthResponses = {
      */
     200: unknown;
 };
-
-export type GetTokensByLocaleData = {
-    body?: never;
-    path: {
-        locale: string;
-    };
-    query?: never;
-    url: '/tokens/{locale}';
-};
-
-export type GetTokensByLocaleErrors = {
-    /**
-     * unable to retrieve tokens for locale
-     */
-    404: unknown;
-};
-
-export type GetTokensByLocaleResponses = {
-    /**
-     * successfully retrieved tokens
-     */
-    200: {
-        tokens: {
-            [key: string]: string;
-        };
-    };
-};
-
-export type GetTokensByLocaleResponse = GetTokensByLocaleResponses[keyof GetTokensByLocaleResponses];

@@ -1,8 +1,8 @@
 import { createRoute, OpenAPIHono, z } from '@hono/zod-openapi';
 
-import { environment } from '../../environment';
-import { configService } from '../../services/config/ConfigService';
-import { tokenService } from '../../services/tokens/TokenService';
+import { environment } from '../../../environment';
+import { configService } from '../../../services/config/ConfigService';
+import { tokenService } from '../../../services/tokens/TokenService';
 
 export const bootstrapRouter = new OpenAPIHono();
 

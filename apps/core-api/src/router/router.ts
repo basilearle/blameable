@@ -6,10 +6,8 @@ import { cors } from 'hono/cors';
 import { environment } from '../environment';
 import { adminRouter } from './admin/router';
 import { authRouter } from './auth/router';
-import { blameRouter } from './blame/router';
-import { bootstrapRouter } from './bootstrap/bootstrap';
+import { clientRouter } from './client/router';
 import { healthRouter } from './health/router';
-import { tokensRouter } from './tokens/tokens';
 
 const document: OpenAPIObjectConfigure<Env, '/'> = {
   openapi: '3.0.0',
@@ -47,15 +45,14 @@ if (environment.corsOrigins) {
 
 apiRouter.route('/admin', adminRouter);
 apiRouter.route('/auth', authRouter);
-apiRouter.route('/blame', blameRouter);
-apiRouter.route('/bootstrap', bootstrapRouter);
+apiRouter.route('/client', clientRouter);
 apiRouter.route('/health', healthRouter);
-apiRouter.route('/tokens', tokensRouter);
 
 if (environment.apiSpec) {
   apiRouter.doc('/doc', document);
-
-  apiRouter.get('/swagger', swaggerUI({ url: '/api/doc' }));
+  apiRouter.get('/swagger', swaggerUI({
+    url: '/api/doc'
+  }));
 }
 
 export const API_DOC = apiRouter.getOpenAPIDocument(document);

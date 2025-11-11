@@ -1,7 +1,7 @@
 import { createRoute, OpenAPIHono } from '@hono/zod-openapi';
 
-import { environment } from '../../environment';
-import { blameService } from '../../services/blame/BlameService';
+import { environment } from '../../../environment';
+import { blameService } from '../../../services/blame/BlameService';
 
 export const blameRouter = new OpenAPIHono();
 

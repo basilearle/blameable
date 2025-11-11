@@ -51,7 +51,7 @@ export async function mockBootstrap(
 ) {
   const { locale = DEFAULT_LOCALE, delay = 0 } = options;
 
-  await page.route('**/api/bootstrap', async (route, request) => {
+  await page.route('**/api/client/bootstrap', async (route, request) => {
     const url = new URL(request.url());
     const localeParam = url.searchParams.get('locale') as Locale ?? locale;
     const tokens = LOCALE_TOKENS[localeParam] ?? LOCALE_TOKENS[DEFAULT_LOCALE];
@@ -81,7 +81,7 @@ export async function mockAllAPIs(page: Page) {
   await mockBootstrap(page);
 
   // Mock blame endpoint
-  await page.route('**/api/blame', async (route) => {
+  await page.route('**/api/client/blame', async (route) => {
     await route.fulfill({
       status: 200,
       contentType: 'application/json',
@@ -90,7 +90,7 @@ export async function mockAllAPIs(page: Page) {
   });
 
   // Mock locale endpoint
-  await page.route('**/api/locale/:locale', async (route, request) => {
+  await page.route('**/api/client/locale/:locale', async (route, request) => {
     const url = new URL(request.url());
     const pathParts = url.pathname.split('/');
     const localeId = pathParts[pathParts.length - 1] as Locale;

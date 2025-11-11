@@ -26,7 +26,6 @@ export default defineConfig(({ mode }) => {
   preview: {
     port: 4300,
     host: 'localhost',
-    proxy: proxyConfig,
   },
   plugins: [react()],
   // Uncomment this if you are using workers.

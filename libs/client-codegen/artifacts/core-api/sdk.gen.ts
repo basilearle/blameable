@@ -2,7 +2,7 @@
 
 import type { Client, Options as Options2, TDataShape } from './client';
 import { client } from './client.gen';
-import type { GetAdminSitesData, GetAdminSitesResponses, GetBootstrapData, GetBootstrapErrors, GetBootstrapResponses, GetHealthData, GetHealthResponses, GetTokensByLocaleData, GetTokensByLocaleErrors, GetTokensByLocaleResponses, PostBlameData, PostBlameResponses } from './types.gen';
+import type { GetAdminSitesData, GetAdminSitesResponses, GetClientBootstrapData, GetClientBootstrapErrors, GetClientBootstrapResponses, GetClientTokensByLocaleData, GetClientTokensByLocaleErrors, GetClientTokensByLocaleResponses, GetHealthData, GetHealthResponses, PostClientBlameData, PostClientBlameResponses } from './types.gen';
 
 export type Options<TData extends TDataShape = TDataShape, ThrowOnError extends boolean = boolean> = Options2<TData, ThrowOnError> & {
     /**
@@ -31,9 +31,9 @@ export const getAdminSites = <ThrowOnError extends boolean = false>(options?: Op
 /**
  * assigns blame to the current user
  */
-export const postBlame = <ThrowOnError extends boolean = false>(options?: Options<PostBlameData, ThrowOnError>) => {
-    return (options?.client ?? client).post<PostBlameResponses, unknown, ThrowOnError>({
-        url: '/blame',
+export const postClientBlame = <ThrowOnError extends boolean = false>(options?: Options<PostClientBlameData, ThrowOnError>) => {
+    return (options?.client ?? client).post<PostClientBlameResponses, unknown, ThrowOnError>({
+        url: '/client/blame',
         ...options
     });
 };
@@ -41,9 +41,19 @@ export const postBlame = <ThrowOnError extends boolean = false>(options?: Option
 /**
  * retrieves the live configuration and language tokens for the client
  */
-export const getBootstrap = <ThrowOnError extends boolean = false>(options?: Options<GetBootstrapData, ThrowOnError>) => {
-    return (options?.client ?? client).get<GetBootstrapResponses, GetBootstrapErrors, ThrowOnError>({
-        url: '/bootstrap',
+export const getClientBootstrap = <ThrowOnError extends boolean = false>(options?: Options<GetClientBootstrapData, ThrowOnError>) => {
+    return (options?.client ?? client).get<GetClientBootstrapResponses, GetClientBootstrapErrors, ThrowOnError>({
+        url: '/client/bootstrap',
+        ...options
+    });
+};
+
+/**
+ * retrieves the language tokens for a given locale
+ */
+export const getClientTokensByLocale = <ThrowOnError extends boolean = false>(options: Options<GetClientTokensByLocaleData, ThrowOnError>) => {
+    return (options.client ?? client).get<GetClientTokensByLocaleResponses, GetClientTokensByLocaleErrors, ThrowOnError>({
+        url: '/client/tokens/{locale}',
         ...options
     });
 };
@@ -54,16 +64,6 @@ export const getBootstrap = <ThrowOnError extends boolean = false>(options?: Opt
 export const getHealth = <ThrowOnError extends boolean = false>(options?: Options<GetHealthData, ThrowOnError>) => {
     return (options?.client ?? client).get<GetHealthResponses, unknown, ThrowOnError>({
         url: '/health',
-        ...options
-    });
-};
-
-/**
- * retrieves the language tokens for a given locale
- */
-export const getTokensByLocale = <ThrowOnError extends boolean = false>(options: Options<GetTokensByLocaleData, ThrowOnError>) => {
-    return (options.client ?? client).get<GetTokensByLocaleResponses, GetTokensByLocaleErrors, ThrowOnError>({
-        url: '/tokens/{locale}',
         ...options
     });
 };

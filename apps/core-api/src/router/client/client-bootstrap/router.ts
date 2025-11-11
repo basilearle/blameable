@@ -1,10 +1,10 @@
 import { createRoute, OpenAPIHono, z } from '@hono/zod-openapi';
 
-import { environment } from '../../environment';
-import { configService } from '../../services/config/ConfigService';
-import { tokenService } from '../../services/tokens/TokenService';
+import { SiteIdVariables } from '../../../middleware/useSiteId';
+import { configService } from '../../../services/config/ConfigService';
+import { tokenService } from '../../../services/tokens/TokenService';
 
-export const bootstrapRouter = new OpenAPIHono();
+export const clientBootstrapRouter = new OpenAPIHono<{ Variables: SiteIdVariables }>();
 
 const BootstrapGetParams = z.object({
   locale: z.string().optional().openapi({
@@ -52,10 +52,11 @@ const bootstrapGetRoute = createRoute({
   },
 });
 
-bootstrapRouter.openapi(bootstrapGetRoute, async (c) => {
+clientBootstrapRouter.openapi(bootstrapGetRoute, async (c) => {
   const { locale } = c.req.valid('query');
+  const siteId = c.get('siteId');
 
-  const config = await configService.getConfigForSite(environment.siteId);
+  const config = await configService.getConfigForSite(siteId);
 
   if (!config) {
     return c.json(null, 400);
@@ -66,7 +67,7 @@ bootstrapRouter.openapi(bootstrapGetRoute, async (c) => {
     ? locale
     : config.defaultLocale;
 
-  const tokens = await tokenService.getTokensForLocale(environment.siteId, defaultLocale);
+  const tokens = await tokenService.getTokensForLocale(siteId, defaultLocale);
 
   if (!tokens) {
     return c.json(null, 400);

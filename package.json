@@ -2,7 +2,8 @@
   "name": "@blameable/source",
   "version": "0.0.1",
   "scripts": {
-    "start": "nx run-many -t dev"
+    "start": "nx run-many -t dev",
+    "dockerize": "nx run-many -t docker-build"
   },
   "private": true,
   "dependencies": {

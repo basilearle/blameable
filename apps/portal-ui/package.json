@@ -11,6 +11,16 @@
             "docker build --rm -t blameable/portal-ui -f apps/portal-ui/Dockerfile ."
           ]
         }
+      },
+      "storybook": {
+        "options": {
+          "port": 4400
+        }
+      },
+      "static-storybook": {
+        "options": {
+          "port": 4400
+        }
       }
     }
   }

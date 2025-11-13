@@ -1,24 +1,27 @@
 import { type PropsWithChildren, useRef} from "react";
+import type { StateCreator } from "zustand/vanilla";
 
 import {
-  type BaseState,
+  type ExtendedState,
   type BaseStore,
   BaseStoreContext,
   createBaseStore
 } from "../../../store";
 
-export type StoreProviderProps = PropsWithChildren & {
-  defaultStoreProps?: Partial<BaseState>;
+export type StoreProviderProps<T extends object = object> = PropsWithChildren & {
+  defaultStoreProps?: Partial<ExtendedState<T>>;
+  slices?: StateCreator<ExtendedState<T>, [], [], T>[];
 };
 
-export function StoreProvider({
+export function StoreProvider<T extends object = object>({
   children,
   defaultStoreProps,
-}: StoreProviderProps) {
-  const storeRef = useRef<BaseStore>(null);
+  slices,
+}: StoreProviderProps<T>) {
+  const storeRef = useRef<BaseStore<T>>(null);
 
   if (!storeRef.current) {
-    storeRef.current = createBaseStore(defaultStoreProps);
+    storeRef.current = createBaseStore<T>(defaultStoreProps, slices);
   }
 
   return (

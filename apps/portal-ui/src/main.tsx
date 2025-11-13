@@ -11,6 +11,7 @@ import { ShellProvider } from '@blameable/client-common';
 
 import App from './app/App';
 import { environment } from './environment';
+import { createBlameSlice } from './store';
 
 // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
 const root = document.querySelector('#root')!;
@@ -41,6 +42,9 @@ const locale = queryParameters.get('locale') ?? undefined;
   createRoot(root).render(
     <StrictMode>
       <ShellProvider
+        slices={[
+          createBlameSlice,
+        ]}
         defaultStoreProps={{
           currentLocale: data.defaultLocale,
           localeOptions: data.availableLocales,

@@ -1,11 +1,13 @@
 import { createContext, useContext } from "react";
 import { useStore } from "zustand/react";
 
-import type { BaseState, BaseStore } from "./store";
+import type { ExtendedState, BaseStore } from "./store";
 
 export const BaseStoreContext = createContext<BaseStore | null>(null);
 
-export function useBaseStore<T>(selector: (state: BaseState) => T): T {
+export function useBaseStore<T>(
+  selector: (state: ExtendedState) => T
+): T {
   const store = useContext(BaseStoreContext);
 
   if (!store) {

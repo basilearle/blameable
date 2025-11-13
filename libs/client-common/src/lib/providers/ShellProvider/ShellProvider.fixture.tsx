@@ -1,10 +1,12 @@
 import type { PropsWithChildren } from "react";
+import type { StateCreator } from "zustand/vanilla";
 
 import { ShellProvider } from "./ShellProvider";
-import type { BaseState } from "../../store";
+import type { ExtendedState } from "../../store";
 
-export type ShellProviderFixtureProps = PropsWithChildren & {
-  defaultStoreProps?: Partial<BaseState>;
+export type ShellProviderFixtureProps<T extends object = object> = PropsWithChildren & {
+  defaultStoreProps?: Partial<ExtendedState<T>>;
+  slices?: StateCreator<ExtendedState<T>, [], [], T>[];
 };
 
 const DEFAULT_MOCK_TOKENS: Record<string, string> = {
@@ -18,27 +20,23 @@ const DEFAULT_MOCK_TOKENS: Record<string, string> = {
   "global.locale.es-MX": "Spanish",
 };
 
-export function ShellProviderFixture({
+export function ShellProviderFixture<T extends object = object>({
   children,
   defaultStoreProps,
-}: ShellProviderFixtureProps) {
-  const mockStoreProps: Partial<BaseState> = {
-    blameCount: 0,
-    isBlamePending: false,
+  slices,
+}: ShellProviderFixtureProps<T>) {
+  const mockStoreProps: Partial<ExtendedState<T>> = {
     currentLocale: 'en-CA',
     localeOptions: ['en-CA', 'fr-CA'],
     tokens: DEFAULT_MOCK_TOKENS,
-    onAssignBlame: async () => {
-      console.log('onAssignBlame: assigning blame');
-    },
     handleLocaleChange: async () => {
       console.log('handleLocaleChange: changing locale');
     },
     ...defaultStoreProps,
-  };
+  } as Partial<ExtendedState<T>>;
 
   return (
-    <ShellProvider defaultStoreProps={mockStoreProps}>
+    <ShellProvider defaultStoreProps={mockStoreProps} slices={slices}>
       {children}
     </ShellProvider>
   );

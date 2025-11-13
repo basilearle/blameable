@@ -1,19 +1,27 @@
 import { devtools } from "zustand/middleware";
-import { createStore } from "zustand/vanilla";
+import { createStore, type StateCreator } from "zustand/vanilla";
 
-import { type BlameSlice, createBlameSlice } from "./blame/blame.slice";
 import { createTokenSlice, type TokensSlice } from "./tokens/tokens.slice";
 
-export type BaseState = BlameSlice & TokensSlice;
+export type BaseState = TokensSlice;
+export type BaseStore<T extends object = object> = ReturnType<typeof createBaseStore<T>>;
+export type ExtendedState<T extends object = object> = BaseState & T;
 
-export type BaseStore = ReturnType<typeof createBaseStore>
-
-export const createBaseStore = (initProps?: Partial<BaseState>) => {
-  return createStore<BaseState>()(
+export const createBaseStore = <T extends object = object>(
+  initProps?: Partial<ExtendedState<T>>,
+  additionalSlices?: StateCreator<ExtendedState<T>, [], [], T>[]
+) => {
+  return createStore<ExtendedState<T>>()(
     devtools(
       (...a) => ({
-        ...createBlameSlice(...a),
         ...createTokenSlice(...a),
+        ...(additionalSlices?.reduce(
+          (acc, slice) => ({
+            ...acc,
+            ...slice(...a),
+          }),
+          {},
+        )),
         ...initProps,
       })
     )

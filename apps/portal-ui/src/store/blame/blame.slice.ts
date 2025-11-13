@@ -1,8 +1,7 @@
 import type { StateCreator } from "zustand/vanilla";
 
 import { postClientBlame } from '@blameable/client-codegen/core-api';
-
-import type { BaseState } from "../store";
+import type { ExtendedState } from '@blameable/client-common';
 
 export type BlameSlice = {
   blameCount: number;
@@ -11,7 +10,7 @@ export type BlameSlice = {
 };
 
 export const createBlameSlice: StateCreator<
-  BaseState,
+  ExtendedState<BlameSlice>,
   [],
   [],
   BlameSlice

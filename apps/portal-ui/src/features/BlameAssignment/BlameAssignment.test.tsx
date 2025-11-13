@@ -1,13 +1,17 @@
 import { render } from "@testing-library/react";
 import { userEvent } from "@testing-library/user-event";
 
-import { ShellProviderFixture, type BaseState } from "@blameable/client-common";
+import { ShellProviderFixture } from "@blameable/client-common";
 
 import { BlameAssignment } from "./BlameAssignment";
+import { createBlameSlice, type BlameSlice } from "../../store/blame/blame.slice";
 
-const renderBlameAssignment = (defaultStoreProps?: Partial<BaseState>) => {
+const renderBlameAssignment = (defaultStoreProps?: Partial<BlameSlice>) => {
   return render(
-    <ShellProviderFixture defaultStoreProps={defaultStoreProps}>
+    <ShellProviderFixture
+      defaultStoreProps={defaultStoreProps}
+      slices={[createBlameSlice]}
+    >
       <BlameAssignment />
     </ShellProviderFixture>
   );

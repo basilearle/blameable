@@ -1,22 +1,25 @@
 import type { PropsWithChildren } from "react";
+import type { StateCreator } from "zustand/vanilla";
 
 import { ErrorBoundaryProvider } from "./ErrorBoundaryProvider";
 import { StoreProvider } from "./StoreProvider";
 import { ThemeProvider } from "./ThemeProvider";
 import { TokenProvider } from "./TokenProvider";
-import type { BaseState } from "../../store";
+import type { ExtendedState } from "../../store";
 
-export type ShellProviderProps = PropsWithChildren & {
-  defaultStoreProps?: Partial<BaseState>;
+export type ShellProviderProps<T extends object = object> = PropsWithChildren & {
+  defaultStoreProps?: Partial<ExtendedState<T>>;
+  slices?: StateCreator<ExtendedState<T>, [], [], T>[];
 };
 
-export function ShellProvider({
+export function ShellProvider<T extends object = object>({
   children,
   defaultStoreProps,
-}: ShellProviderProps) {
+  slices,
+}: ShellProviderProps<T>) {
 
   return (
-    <StoreProvider defaultStoreProps={defaultStoreProps}>
+    <StoreProvider defaultStoreProps={defaultStoreProps} slices={slices}>
       <ThemeProvider>
         <TokenProvider>
           <ErrorBoundaryProvider>

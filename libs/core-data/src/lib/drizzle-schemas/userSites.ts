@@ -6,7 +6,7 @@ import {
   uuid,
 } from 'drizzle-orm/pg-core';
 
-import { user } from './auth';
+import { users } from './auth';
 import { sitesTable } from './sites';
 
 export const usersToSitesTable = pgTable(
@@ -14,7 +14,7 @@ export const usersToSitesTable = pgTable(
   {
     userId: text('user_id')
       .notNull()
-      .references(() => user.id, { onDelete: 'cascade' }),
+      .references(() => users.id, { onDelete: 'cascade' }),
     siteId: uuid('site_id')
       .notNull()
       .references(() => sitesTable.id, { onDelete: 'cascade' }),

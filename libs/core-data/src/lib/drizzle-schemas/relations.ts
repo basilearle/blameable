@@ -1,6 +1,6 @@
 import { relations } from 'drizzle-orm';
 
-import { user } from './auth';
+import { users } from './auth';
 import { blameRegisterTable } from './blame';
 import { cmsTokensTable } from './cms';
 import { sitesTable } from './sites';
@@ -32,14 +32,14 @@ export const cmsTokensRelations = relations(cmsTokensTable, ({ one }) => ({
   }),
 }));
 
-export const userRelations = relations(user, ({ many }) => ({
+export const userRelations = relations(users, ({ many }) => ({
   usersToSites: many(usersToSitesTable),
 }));
 
 export const usersToSitesRelations = relations(usersToSitesTable, ({ one }) => ({
-  user: one(user, {
+  user: one(users, {
     fields: [usersToSitesTable.userId],
-    references: [user.id],
+    references: [users.id],
   }),
   site: one(sitesTable, {
     fields: [usersToSitesTable.siteId],

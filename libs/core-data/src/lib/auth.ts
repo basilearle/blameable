@@ -10,6 +10,7 @@ export const createBetterAuthPool = (
   trustedOrigins: allowedOrigins,
   database: drizzleAdapter(db, {
     provider: 'pg',
+    usePlural: true,
   }),
   emailAndPassword: {
     enabled: true,

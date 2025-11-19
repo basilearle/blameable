@@ -2,7 +2,7 @@ import { json, pgTable, timestamp, uuid } from 'drizzle-orm/pg-core';
 
 import { sitesTable } from './sites';
 
-export const cmsTokensTable = pgTable('cms_tokens', {
+export const siteContentData = pgTable('site_content_data', {
   id: uuid()
     .primaryKey()
     .defaultRandom(),

@@ -2,7 +2,7 @@ import { pgTable, timestamp, uuid, varchar } from 'drizzle-orm/pg-core';
 
 import { sitesTable } from './sites';
 
-export const blameRegisterTable = pgTable('blame_register', {
+export const siteBlameRegisterTable = pgTable('site_blame_register', {
   id: uuid()
     .primaryKey()
     .defaultRandom(),

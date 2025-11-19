@@ -1,6 +1,6 @@
 import { char, pgTable, timestamp, uuid, varchar } from 'drizzle-orm/pg-core';
 
-export const sitesTable = pgTable('sites', {
+export const sites = pgTable('sites', {
   id: uuid()
     .primaryKey()
     .defaultRandom(),

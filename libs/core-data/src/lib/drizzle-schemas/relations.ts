@@ -1,48 +1,48 @@
 import { relations } from 'drizzle-orm';
 
 import { users } from './auth';
-import { blameRegisterTable } from './blame';
-import { cmsTokensTable } from './cms';
-import { sitesTable } from './sites';
-import { usersToSitesTable } from './userSites';
+import { siteBlameRegister } from './blame';
+import { siteContentData } from './cms';
+import { sites } from './sites';
+import { usersToSites } from './userSites';
 
-export const sitesRelations = relations(sitesTable, ({ one, many }) => ({
-  blameRegister: one(blameRegisterTable, {
-    fields: [sitesTable.id],
-    references: [blameRegisterTable.siteId],
+export const sitesRelations = relations(sites, ({ one, many }) => ({
+  siteBlameRegister: one(siteBlameRegister, {
+    fields: [sites.id],
+    references: [siteBlameRegister.siteId],
   }),
-  cmsTokens: one(cmsTokensTable, {
-    fields: [sitesTable.id],
-    references: [cmsTokensTable.siteId],
+  siteContentData: one(siteContentData, {
+    fields: [sites.id],
+    references: [siteContentData.siteId],
   }),
-  usersToSites: many(usersToSitesTable),
+  usersToSites: many(usersToSites),
 }));
 
-export const blameRegisterRelations = relations(blameRegisterTable, ({ one }) => ({
-  site: one(sitesTable, {
-    fields: [blameRegisterTable.siteId],
-    references: [sitesTable.id],
+export const siteBlameRegisterRelations = relations(siteBlameRegister, ({ one }) => ({
+  site: one(sites, {
+    fields: [siteBlameRegister.siteId],
+    references: [sites.id],
   }),
 }));
 
-export const cmsTokensRelations = relations(cmsTokensTable, ({ one }) => ({
-  site: one(sitesTable, {
-    fields: [cmsTokensTable.siteId],
-    references: [sitesTable.id],
+export const siteContentDataRelations = relations(siteContentData, ({ one }) => ({
+  site: one(sites, {
+    fields: [siteContentData.siteId],
+    references: [sites.id],
   }),
 }));
 
 export const userRelations = relations(users, ({ many }) => ({
-  usersToSites: many(usersToSitesTable),
+  usersToSites: many(usersToSites),
 }));
 
-export const usersToSitesRelations = relations(usersToSitesTable, ({ one }) => ({
+export const usersToSitesRelations = relations(usersToSites, ({ one }) => ({
   user: one(users, {
-    fields: [usersToSitesTable.userId],
+    fields: [usersToSites.userId],
     references: [users.id],
   }),
-  site: one(sitesTable, {
-    fields: [usersToSitesTable.siteId],
-    references: [sitesTable.id],
+  site: one(sites, {
+    fields: [usersToSites.siteId],
+    references: [sites.id],
   }),
 }));

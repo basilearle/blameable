@@ -1,6 +1,6 @@
 import { json, pgTable, timestamp, uuid } from 'drizzle-orm/pg-core';
 
-import { sitesTable } from './sites';
+import { sites } from './sites';
 
 export const siteContentData = pgTable('site_content_data', {
   id: uuid()
@@ -9,7 +9,7 @@ export const siteContentData = pgTable('site_content_data', {
   siteId: uuid('site_id')
     .notNull()
     .unique()
-    .references(() => sitesTable.id, { onDelete: 'cascade' }),
+    .references(() => sites.id, { onDelete: 'cascade' }),
   tokens: json()
     .notNull()
     .default({}),

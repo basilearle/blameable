@@ -21,10 +21,12 @@ export const usersToSites = pgTable(
     siteId: uuid('site_id')
       .notNull()
       .references(() => sites.id, { onDelete: 'cascade' }),
-    owner: boolean('owner').notNull().default(false),
+    owner: boolean('owner')
+      .notNull()
+      .default(false),
     createdAt: timestamp('created_at')
       .notNull()
-      .$onUpdate(() => /* @__PURE__ */ new Date()),
+      .defaultNow(),
   },
   (table) => [
     primaryKey({ columns: [table.userId, table.siteId] }),

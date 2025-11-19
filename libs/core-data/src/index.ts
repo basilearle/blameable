@@ -1,3 +1,3 @@
 export * from './lib/auth';
 export * from './lib/db';
-export * from './lib/drizzle-schemas';
+export * from './lib/schemas';

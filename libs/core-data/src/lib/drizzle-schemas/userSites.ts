@@ -1,8 +1,11 @@
+import { sql } from 'drizzle-orm';
 import {
+  boolean,
   pgTable,
   primaryKey,
   text,
   timestamp,
+  uniqueIndex,
   uuid,
 } from 'drizzle-orm/pg-core';
 
@@ -18,11 +21,15 @@ export const usersToSitesTable = pgTable(
     siteId: uuid('site_id')
       .notNull()
       .references(() => sitesTable.id, { onDelete: 'cascade' }),
+    owner: boolean('owner').notNull().default(false),
     createdAt: timestamp('created_at')
       .notNull()
       .$onUpdate(() => /* @__PURE__ */ new Date()),
   },
   (table) => [
-    primaryKey({ columns: [table.userId, table.siteId] })
+    primaryKey({ columns: [table.userId, table.siteId] }),
+    uniqueIndex('one_owner_per_site')
+      .on(table.siteId)
+      .where(sql`${table.owner} = true`),
   ],
 );

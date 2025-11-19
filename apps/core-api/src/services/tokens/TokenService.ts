@@ -1,14 +1,14 @@
 import { eq } from 'drizzle-orm';
 
-import { cmsTokensTable } from '@blameable/core-data';
+import { siteContentData } from '@blameable/core-data';
 
 import { db } from '../../clients/db';
 
 export class TokenService {
 
   async getTokensForLocale(siteId: string, locale: string) {
-    const tokenEntry = await db.query.cmsTokensTable.findFirst({
-      where: eq(cmsTokensTable.site_id, siteId)
+    const tokenEntry = await db.query.siteContentData.findFirst({
+      where: eq(siteContentData.siteId, siteId)
     });
 
     if (!tokenEntry) {

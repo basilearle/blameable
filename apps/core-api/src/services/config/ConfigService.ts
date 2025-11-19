@@ -1,14 +1,14 @@
 import { eq } from 'drizzle-orm';
 
-import { sitesTable } from '@blameable/core-data';
+import { sites } from '@blameable/core-data';
 
 import { db } from '../../clients/db';
 
 export class ConfigService {
 
   async getConfigForSite(siteId: string) {
-    const siteConfig = await db.query.sitesTable.findFirst({
-      where: eq(sitesTable.id, siteId)
+    const siteConfig = await db.query.sites.findFirst({
+      where: eq(sites.id, siteId)
     });
 
     if (!siteConfig) {
@@ -18,8 +18,9 @@ export class ConfigService {
     return {
       id: siteConfig.id,
       name: siteConfig.name,
-      defaultLocale: siteConfig.default_locale,
-      availableLocales: siteConfig.configured_locales,
+      defaultLocale: siteConfig.defaultLocale,
+      // FIXME: this no longer will be coming from the configs, instead show come from the `site_content_date`
+      availableLocales: [] as string[],
     };
   }
 

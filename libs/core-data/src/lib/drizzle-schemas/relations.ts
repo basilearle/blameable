@@ -9,25 +9,25 @@ import { usersToSitesTable } from './userSites';
 export const sitesRelations = relations(sitesTable, ({ one, many }) => ({
   blameRegister: one(blameRegisterTable, {
     fields: [sitesTable.id],
-    references: [blameRegisterTable.site_id],
+    references: [blameRegisterTable.siteId],
   }),
   cmsTokens: one(cmsTokensTable, {
     fields: [sitesTable.id],
-    references: [cmsTokensTable.site_id],
+    references: [cmsTokensTable.siteId],
   }),
   usersToSites: many(usersToSitesTable),
 }));
 
 export const blameRegisterRelations = relations(blameRegisterTable, ({ one }) => ({
   site: one(sitesTable, {
-    fields: [blameRegisterTable.site_id],
+    fields: [blameRegisterTable.siteId],
     references: [sitesTable.id],
   }),
 }));
 
 export const cmsTokensRelations = relations(cmsTokensTable, ({ one }) => ({
   site: one(sitesTable, {
-    fields: [cmsTokensTable.site_id],
+    fields: [cmsTokensTable.siteId],
     references: [sitesTable.id],
   }),
 }));
@@ -38,11 +38,11 @@ export const userRelations = relations(user, ({ many }) => ({
 
 export const usersToSitesRelations = relations(usersToSitesTable, ({ one }) => ({
   user: one(user, {
-    fields: [usersToSitesTable.user_id],
+    fields: [usersToSitesTable.userId],
     references: [user.id],
   }),
   site: one(sitesTable, {
-    fields: [usersToSitesTable.site_id],
+    fields: [usersToSitesTable.siteId],
     references: [sitesTable.id],
   }),
 }));

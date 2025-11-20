@@ -1,7 +1,7 @@
 import { and, eq } from 'drizzle-orm';
 
 import { Database } from '../../db';
-import { sites, usersToSites } from '../../schemas';
+import { siteContentData, sites, usersToSites } from '../../schemas';
 
 export type SiteDetails = {
   id: string;
@@ -9,6 +9,7 @@ export type SiteDetails = {
   defaultLocale: string;
   global: boolean;
   isOwner: boolean;
+  tokens: unknown;
   createdAt: Date;
   updatedAt: Date;
 };
@@ -16,19 +17,20 @@ export type SiteDetails = {
 export async function getSiteDetails(
   db: Database,
   siteId: string,
-  userId: string
-): Promise<SiteDetails | null> {
+  userId?: string
+): Promise<SiteDetails> {
   if (!db || !siteId || !userId) {
     throw new Error('getSiteDetails: missing DB, siteId or userId');
   }
 
-  const result = await db
+  const results = await db
     .select({
       id: sites.id,
       name: sites.name,
       defaultLocale: sites.defaultLocale,
       global: sites.global,
       isOwner: usersToSites.owner,
+      tokens: siteContentData.tokens,
       createdAt: sites.createdAt,
       updatedAt: sites.updatedAt,
     })
@@ -37,8 +39,14 @@ export async function getSiteDetails(
       usersToSites,
       and(eq(usersToSites.siteId, sites.id), eq(usersToSites.userId, userId))
     )
+    .leftJoin(siteContentData, eq(siteContentData.siteId, sites.id))
     .where(eq(sites.id, siteId))
-    .limit(1);
 
-  return result?.at(0) ?? null;
+  const result = results?.at(0);
+
+  if (!result) {
+    throw new Error('getSiteDetails: site not found');
+  }
+
+  return result;
 }

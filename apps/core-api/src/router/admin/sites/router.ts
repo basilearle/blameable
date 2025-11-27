@@ -5,6 +5,7 @@ import {
   deleteSite,
   getSiteDetails,
   listSites,
+  patchSite,
 } from '@blameable/core-data';
 
 import { db } from '../../../clients/db';
@@ -176,7 +177,67 @@ sitesRouter.openapi(getSiteRoute, async (c) => {
   return c.body(null, 400);
 });
 
-sitesRouter.patch('/:siteId');
+// SECTION: patch a site
+
+export const PatchSiteParams = z.object({
+  id: z.string().openapi({
+    param: {
+      name: 'id',
+      in: 'path',
+    },
+    example: 'afskhfkjs',
+  }),
+});
+
+export const PatchSiteBody = z.object({
+  name: z.string().optional(),
+  defaultLocale: z.string().optional(),
+});
+
+const patchSiteRoute = createRoute({
+  description: 'patch a site for an authenticated user',
+  method: 'patch',
+  path: '/{id}',
+  request: {
+    params: PatchSiteParams,
+    body: {
+      content: {
+        'application/json': {
+          schema: PatchSiteBody,
+        },
+      },
+    },
+  },
+  responses: {
+    200: {
+      description: 'site was deleted successfully',
+      content: {
+        'application/json': {
+          schema: SiteDetails,
+        },
+      },
+    },
+    400: {
+      description: 'unable to delete the site',
+    },
+  },
+});
+
+sitesRouter.openapi(patchSiteRoute, async (c) => {
+  const userId = c.get('userId');
+  const { id } = c.req.valid('param');
+  const body = c.req.valid('json');
+
+  try {
+    const patchedSite = await patchSite(db, id, userId, body);
+
+    return c.json(patchedSite);
+  } catch {
+    console.log('failed to patch the site...');
+  }
+
+  return c.body(null, 400);
+});
 
 // SECTION: delete a site
 

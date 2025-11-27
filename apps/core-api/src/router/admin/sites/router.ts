@@ -8,10 +8,13 @@ import {
   patchSite,
 } from '@blameable/core-data';
 
+import { themeRouter } from './theme/router';
 import { db } from '../../../clients/db';
 import { UserGuardVariables } from '../../../middleware/userGuard';
 
 export const sitesRouter = new OpenAPIHono<{ Variables: UserGuardVariables }>();
+
+sitesRouter.route('/', themeRouter);
 
 // SECTION: list sites
 

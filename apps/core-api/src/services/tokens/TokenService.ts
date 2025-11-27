@@ -15,7 +15,7 @@ export class TokenService {
       return null;
     }
 
-    const tokensForLocale = (tokenEntry.tokens as Record<string, JSON>)[locale];
+    const tokensForLocale = (tokenEntry.translations as Record<string, JSON>)[locale];
 
     if (!tokensForLocale) {
       return null;

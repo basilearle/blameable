@@ -10,7 +10,10 @@ export const siteContentData = pgTable('site_content_data', {
     .notNull()
     .unique()
     .references(() => sites.id, { onDelete: 'cascade' }),
-  tokens: json()
+  theme: json()
+    .notNull()
+    .default({}),
+  translations: json()
     .notNull()
     .default({}),
   createdAt: timestamp('created_at')

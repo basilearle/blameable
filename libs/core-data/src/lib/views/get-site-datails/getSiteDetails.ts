@@ -3,13 +3,18 @@ import { and, eq } from 'drizzle-orm';
 import { Database } from '../../db';
 import { siteContentData, sites, usersToSites } from '../../schemas';
 
+export type SiteTokensTranslations = Record<string, string>;
+
+export type SiteTokensTheme = Record<string, string>;
+
 export type SiteDetails = {
   id: string;
   name: string;
   defaultLocale: string;
   global: boolean;
   isOwner: boolean;
-  tokens: unknown;
+  theme: SiteTokensTheme;
+  translations: Record<string, SiteTokensTranslations>;
   createdAt: Date;
   updatedAt: Date;
 };
@@ -30,7 +35,8 @@ export async function getSiteDetails(
       defaultLocale: sites.defaultLocale,
       global: sites.global,
       isOwner: usersToSites.owner,
-      tokens: siteContentData.tokens,
+      theme: siteContentData.theme,
+      translations: siteContentData.translations,
       createdAt: sites.createdAt,
       updatedAt: sites.updatedAt,
     })
@@ -48,5 +54,6 @@ export async function getSiteDetails(
     throw new Error('getSiteDetails: site not found');
   }
 
-  return result;
+  // FIXME: this makes me sad...
+  return result as SiteDetails;
 }

@@ -1,6 +1,11 @@
 import { createRoute, OpenAPIHono, z } from '@hono/zod-openapi';
 
-import { createSite, deleteSite, listSites } from '@blameable/core-data';
+import {
+  createSite,
+  deleteSite,
+  getSiteDetails,
+  listSites,
+} from '@blameable/core-data';
 
 import { db } from '../../../clients/db';
 import { UserGuardVariables } from '../../../middleware/userGuard';
@@ -82,7 +87,7 @@ const createSiteRoute = createRoute({
   },
   responses: {
     201: {
-      description: 'successfully retrieved site theme',
+      description: 'successfully created the site',
       required: true,
       content: {
         'application/json': {
@@ -121,7 +126,55 @@ sitesRouter.openapi(createSiteRoute, async (c) => {
   return c.body(null, 400);
 });
 
-sitesRouter.get('/:siteId');
+// SECTION: get site details
+
+export const GetSiteParams = z.object({
+  id: z.string().openapi({
+    param: {
+      name: 'id',
+      in: 'path',
+    },
+    example: 'afskhfkjs',
+  }),
+});
+
+const getSiteRoute = createRoute({
+  description: 'gets a site details for an authenticated user',
+  method: 'get',
+  path: '/{id}',
+  request: {
+    params: GetSiteParams,
+  },
+  responses: {
+    200: {
+      description: 'successfully retrieved the site',
+      required: true,
+      content: {
+        'application/json': {
+          schema: SiteDetails,
+        },
+      },
+    },
+    400: {
+      description: 'unable to retrieve the site',
+    },
+  },
+});
+
+sitesRouter.openapi(getSiteRoute, async (c) => {
+  const userId = c.get('userId');
+  const { id } = c.req.valid('param');
+
+  try {
+    const site = await getSiteDetails(db, id, userId);
+
+    return c.json(site, 200);
+  } catch {
+    console.log('failed to get the site...');
+  }
+
+  return c.body(null, 400);
+});
 
 sitesRouter.patch('/:siteId');
 

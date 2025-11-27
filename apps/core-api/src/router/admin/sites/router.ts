@@ -1,6 +1,6 @@
 import { createRoute, OpenAPIHono, z } from '@hono/zod-openapi';
 
-import { createSite } from '@blameable/core-data';
+import { createSite, deleteSite } from '@blameable/core-data';
 
 import { db } from '../../../clients/db';
 import { UserGuardVariables } from '../../../middleware/userGuard';
@@ -59,20 +59,68 @@ sitesRouter.openapi(createSiteRoute, async (c) => {
     defaultLocale,
   } = c.req.valid('json');
 
-  const site = await createSite(
-    db,
-    userId,
-    {
-      name,
-      defaultLocale: defaultLocale ?? 'en-CA',
-    },
-  );
+  try {
+    const site = await createSite(
+      db,
+      userId,
+      {
+        name,
+        defaultLocale: defaultLocale ?? 'en-CA',
+      },
+    );
 
-  return c.json(site);
+    return c.json(site);
+  } catch {
+    console.log('failed to create the site...');
+  }
+
+  return c.body(null, 400);
 });
 
 sitesRouter.get('/:siteId');
 
 sitesRouter.patch('/:siteId');
 
-sitesRouter.delete('/:siteId');
+// SECTION: delete a site
+
+export const DeleteSiteParams = z.object({
+  id: z.string().openapi({
+    param: {
+      name: 'id',
+      in: 'path',
+    },
+    example: 'afskhfkjs',
+  }),
+});
+
+const deleteSiteRoute = createRoute({
+  description: 'creates a new site for an authenticated user',
+  method: 'delete',
+  path: '/{id}',
+  request: {
+    params: DeleteSiteParams,
+  },
+  responses: {
+    204: {
+      description: 'site was deleted successfully',
+    },
+    400: {
+      description: 'unable to delete the site',
+    },
+  },
+});
+
+sitesRouter.openapi(deleteSiteRoute, async (c) => {
+  const userId = c.get('userId');
+  const { id } = c.req.valid('param');
+
+  try {
+    await deleteSite(db, userId, id);
+
+    return c.body(null, 204);
+  } catch {
+    console.log('failed to delete the site...');
+  }
+
+  return c.body(null, 400);
+});

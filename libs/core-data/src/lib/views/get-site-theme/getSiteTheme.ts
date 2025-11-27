@@ -45,20 +45,20 @@ export async function getSiteTheme(
     globalThemeQuery,
   ]);
 
-  if (!siteThemeResult?.[0]) {
+  if (!siteThemeResult?.[0].theme) {
     throw new Error('getSiteTheme: site not found or user does not have access');
   }
 
   if (!mergeGlobalTheme) {
-    return siteThemeResult[0] as Record<string, string>;
+    return siteThemeResult[0].theme as Record<string, string>;
   }
 
-  if (!globalThemeResult?.[0]) {
+  if (!globalThemeResult?.[0].theme) {
     throw new Error('getSiteTheme: unable to retrieve global theme');
   }
 
   return merge(
-    globalThemeResult[0],
-    siteThemeResult[0],
+    globalThemeResult[0].theme,
+    siteThemeResult[0].theme,
   ) as Record<string, string>;
 }

@@ -1,11 +1,55 @@
 import { createRoute, OpenAPIHono, z } from '@hono/zod-openapi';
 
-import { createSite, deleteSite } from '@blameable/core-data';
+import { createSite, deleteSite, listSites } from '@blameable/core-data';
 
 import { db } from '../../../clients/db';
 import { UserGuardVariables } from '../../../middleware/userGuard';
 
 export const sitesRouter = new OpenAPIHono<{ Variables: UserGuardVariables }>();
+
+// SECTION: list sites
+
+export const SiteList = z.array(
+  z.object({
+    id: z.string(),
+    name: z.string(),
+    isOwner: z.boolean(),
+  }),
+);
+
+const listSitesRoute = createRoute({
+  description: 'lists the sites for an authenticated user',
+  method: 'get',
+  path: '/',
+  responses: {
+    200: {
+      description: 'successfully retrieved site theme',
+      required: true,
+      content: {
+        'application/json': {
+          schema: SiteList,
+        },
+      },
+    },
+    400: {
+      description: 'unable to retrieve the sites',
+    },
+  },
+});
+
+sitesRouter.openapi(listSitesRoute, async (c) => {
+  const userId = c.get('userId');
+
+  try {
+    const sites = await listSites(db, userId);
+
+    return c.json(sites);
+  } catch {
+    console.log('failed to retrieve the sites...');
+  }
+
+  return c.body(null, 400);
+});
 
 // SECTION: create a site
 
@@ -94,7 +138,7 @@ export const DeleteSiteParams = z.object({
 });
 
 const deleteSiteRoute = createRoute({
-  description: 'creates a new site for an authenticated user',
+  description: 'deletes a site for an authenticated user',
   method: 'delete',
   path: '/{id}',
   request: {

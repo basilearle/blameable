@@ -3,6 +3,7 @@ import { createRoute, OpenAPIHono, z } from '@hono/zod-openapi';
 import {
   createSiteLocale,
   deleteSiteLocale,
+  getSiteLocaleTranslations,
   listSiteLocales,
 } from '@blameable/core-data';
 
@@ -128,6 +129,89 @@ localeRouter.openapi(createLocaleRoute, async (c) => {
 });
 
 // SECTION: get locale tokens
+
+export const LocaleTranslations = z.record(
+  z.string(),
+  z.string(),
+);
+
+export const GetLocaleTranslationQuery = z.object({
+  merged: z
+  .enum([
+    'true',
+    'false',
+  ])
+  .optional()
+  .openapi({
+    param: {
+      name: 'merged',
+      in: 'query',
+    },
+  }),
+});
+
+export const GetLocaleTranslationParams = z.object({
+  siteId: z.string().openapi({
+    param: {
+      name: 'siteId',
+      in: 'path',
+    },
+    example: 'afskhfkjs',
+  }),
+  localeId: z.string().openapi({
+    param: {
+      name: 'localeId',
+      in: 'path',
+    },
+    example: 'afskhfkjs',
+  }),
+});
+
+const getLocaleTranslationsRoute = createRoute({
+  description: 'gets the translations for a locale, for a site, for an authenticated user',
+  method: 'get',
+  path: '/{siteId}/locales/{localeId}',
+  request: {
+    params: GetLocaleTranslationParams,
+    query: GetLocaleTranslationQuery,
+  },
+  responses: {
+    200: {
+      description: 'retrieved the site locale translations successfully',
+      content: {
+        'application/json': {
+          schema: LocaleTranslations,
+        },
+      },
+    },
+    400: {
+      description: 'unable to get the site locale translations',
+    },
+  },
+});
+
+localeRouter.openapi(getLocaleTranslationsRoute, async (c) => {
+  const userId = c.get('userId');
+  const { siteId, localeId } = c.req.valid('param');
+  const { merged = 'true' } = c.req.valid('query');
+
+  try {
+    const translationTokens = await getSiteLocaleTranslations(
+      db,
+      userId,
+      siteId,
+      localeId,
+      merged === 'true'
+    );
+
+    return c.json(translationTokens);
+  } catch {
+    console.log('failed to delete the site locale...');
+  }
+
+  return c.body(null, 400);
+});
+
 
 // SECTION: patch a locales tokens
 

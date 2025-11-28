@@ -1,0 +1,20 @@
+meta {
+  name: get locale translations
+  type: http
+  seq: 4
+}
+
+get {
+  url: http://localhost:3000/api/admin/sites/9d607f41-c697-4af1-b8b1-65b514763aee/locales/en-CA?merged=false
+  body: none
+  auth: inherit
+}
+
+params:query {
+  merged: false
+}
+
+settings {
+  encodeUrl: true
+  timeout: 0
+}

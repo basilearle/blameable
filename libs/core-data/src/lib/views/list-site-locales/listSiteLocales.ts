@@ -9,7 +9,7 @@ export async function listSiteLocales(
   siteId: string,
 ) {
   if (!db || !userId || !siteId) {
-    throw new Error('listSiteLocales: missing DB, userId, siteId, or locale');
+    throw new Error('listSiteLocales: missing DB, userId, siteId');
   }
 
   const siteTranslationData = await db

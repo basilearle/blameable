@@ -10,9 +10,9 @@ export const themeRouter = new OpenAPIHono<{ Variables: UserGuardVariables }>();
 // SECTION: get site theme
 
 export const GetSiteThemeParams = z.object({
-  id: z.string().openapi({
+  siteId: z.string().openapi({
     param: {
-      name: 'id',
+      name: 'siteId',
       in: 'path',
     },
     example: 'afskhfkjs',
@@ -42,7 +42,7 @@ export const ThemeDetails = z.record(
 const getSiteThemeRoute = createRoute({
   description: 'gets the theme for a site, for an authenticated user. If merged is true, it will return the merged theme for the site, otherwise it will return the individual theme for the site.',
   method: 'get',
-  path: '/{id}/theme',
+  path: '/{siteId}/theme',
   request: {
     params: GetSiteThemeParams,
     query: GetSiteThemeQuery,
@@ -65,14 +65,14 @@ const getSiteThemeRoute = createRoute({
 
 themeRouter.openapi(getSiteThemeRoute, async (c) => {
   const userId = c.get('userId');
-  const { id } = c.req.valid('param');
+  const { siteId } = c.req.valid('param');
   const { merged = 'true' } = c.req.valid('query');
 
   try {
     const theme = await getSiteTheme(
       db,
       userId,
-      id,
+      siteId,
       merged === 'true'
     );
 
@@ -85,9 +85,9 @@ themeRouter.openapi(getSiteThemeRoute, async (c) => {
 // SECTION: patch site theme
 
 export const PatchSiteThemeParams = z.object({
-  id: z.string().openapi({
+  siteId: z.string().openapi({
     param: {
-      name: 'id',
+      name: 'siteId',
       in: 'path',
     },
     example: 'afskhfkjs',
@@ -97,7 +97,7 @@ export const PatchSiteThemeParams = z.object({
 const patchSiteThemeRoute = createRoute({
   description: 'patch the theme for a site, for an authenticated user.',
   method: 'patch',
-  path: '/{id}/theme',
+  path: '/{siteId}/theme',
   request: {
     params: PatchSiteThemeParams,
     body: {
@@ -126,13 +126,13 @@ const patchSiteThemeRoute = createRoute({
 
 themeRouter.openapi(patchSiteThemeRoute, async (c) => {
   const userId = c.get('userId');
-  const { id } = c.req.valid('param');
+  const { siteId } = c.req.valid('param');
   const body = c.req.valid('json');
 
   try {
     const theme = await patchTheme(
       db,
-      id,
+      siteId,
       userId,
       body
     );

@@ -15,6 +15,10 @@ import { UserGuardVariables } from '../../../middleware/userGuard';
 
 export const sitesRouter = new OpenAPIHono<{ Variables: UserGuardVariables }>();
 
+// SECTION: child routers
+
+// NOTE: the child routes start at `/` since the will also need access to the `{siteId}` param,
+// which cannot be accessed in the child router if defined here.
 sitesRouter.route('/', localeRouter);
 sitesRouter.route('/', themeRouter);
 
@@ -135,9 +139,9 @@ sitesRouter.openapi(createSiteRoute, async (c) => {
 // SECTION: get site details
 
 export const GetSiteParams = z.object({
-  id: z.string().openapi({
+  siteId: z.string().openapi({
     param: {
-      name: 'id',
+      name: 'siteId',
       in: 'path',
     },
     example: 'afskhfkjs',
@@ -147,7 +151,7 @@ export const GetSiteParams = z.object({
 const getSiteRoute = createRoute({
   description: 'gets a site details for an authenticated user',
   method: 'get',
-  path: '/{id}',
+  path: '/{siteId}',
   request: {
     params: GetSiteParams,
   },
@@ -169,10 +173,10 @@ const getSiteRoute = createRoute({
 
 sitesRouter.openapi(getSiteRoute, async (c) => {
   const userId = c.get('userId');
-  const { id } = c.req.valid('param');
+  const { siteId } = c.req.valid('param');
 
   try {
-    const site = await getSiteDetails(db, id, userId);
+    const site = await getSiteDetails(db, siteId, userId);
 
     return c.json(site, 200);
   } catch {
@@ -185,9 +189,9 @@ sitesRouter.openapi(getSiteRoute, async (c) => {
 // SECTION: patch a site
 
 export const PatchSiteParams = z.object({
-  id: z.string().openapi({
+  siteId: z.string().openapi({
     param: {
-      name: 'id',
+      name: 'siteId',
       in: 'path',
     },
     example: 'afskhfkjs',
@@ -202,7 +206,7 @@ export const PatchSiteBody = z.object({
 const patchSiteRoute = createRoute({
   description: 'patch a site for an authenticated user',
   method: 'patch',
-  path: '/{id}',
+  path: '/{siteId}',
   request: {
     params: PatchSiteParams,
     body: {
@@ -230,11 +234,11 @@ const patchSiteRoute = createRoute({
 
 sitesRouter.openapi(patchSiteRoute, async (c) => {
   const userId = c.get('userId');
-  const { id } = c.req.valid('param');
+  const { siteId } = c.req.valid('param');
   const body = c.req.valid('json');
 
   try {
-    const patchedSite = await patchSite(db, id, userId, body);
+    const patchedSite = await patchSite(db, siteId, userId, body);
 
     return c.json(patchedSite);
   } catch {
@@ -247,9 +251,9 @@ sitesRouter.openapi(patchSiteRoute, async (c) => {
 // SECTION: delete a site
 
 export const DeleteSiteParams = z.object({
-  id: z.string().openapi({
+  siteId: z.string().openapi({
     param: {
-      name: 'id',
+      name: 'siteId',
       in: 'path',
     },
     example: 'afskhfkjs',
@@ -259,7 +263,7 @@ export const DeleteSiteParams = z.object({
 const deleteSiteRoute = createRoute({
   description: 'deletes a site for an authenticated user',
   method: 'delete',
-  path: '/{id}',
+  path: '/{siteId}',
   request: {
     params: DeleteSiteParams,
   },
@@ -275,10 +279,10 @@ const deleteSiteRoute = createRoute({
 
 sitesRouter.openapi(deleteSiteRoute, async (c) => {
   const userId = c.get('userId');
-  const { id } = c.req.valid('param');
+  const { siteId } = c.req.valid('param');
 
   try {
-    await deleteSite(db, userId, id);
+    await deleteSite(db, userId, siteId);
 
     return c.body(null, 204);
   } catch {

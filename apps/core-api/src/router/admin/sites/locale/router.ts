@@ -10,9 +10,9 @@ export const localeRouter = new OpenAPIHono<{ Variables: UserGuardVariables }>()
 // SECTION: list locales
 
 export const GetLocalesParams = z.object({
-  id: z.string().openapi({
+  siteId: z.string().openapi({
     param: {
-      name: 'id',
+      name: 'siteId',
       in: 'path',
     },
     example: 'afskhfkjs',
@@ -26,7 +26,7 @@ export const LocaleList = z.array(
 const listSitesRoute = createRoute({
   description: 'lists the locales available for a site, for an authenticated user',
   method: 'get',
-  path: '/{id}/locales',
+  path: '/{siteId}/locales',
   request: {
     params: GetLocalesParams,
   },
@@ -48,10 +48,10 @@ const listSitesRoute = createRoute({
 
 localeRouter.openapi(listSitesRoute, async (c) => {
   const userId = c.get('userId');
-  const { id } = c.req.valid('param');
+  const { siteId } = c.req.valid('param');
 
   try {
-    const sites = await listSiteLocales(db, userId, id);
+    const sites = await listSiteLocales(db, userId, siteId);
 
     return c.json(sites);
   } catch {

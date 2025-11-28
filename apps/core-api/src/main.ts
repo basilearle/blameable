@@ -6,7 +6,10 @@ import { environment } from './environment';
 import { apiRouter } from './router/router';
 
 // Load environment variables
-config();
+config({
+  // removes stupid marketing logs from dotenv
+  quiet: true,
+});
 
 const app = new OpenAPIHono();
 

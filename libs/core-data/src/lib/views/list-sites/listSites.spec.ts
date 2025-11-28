@@ -1,18 +1,18 @@
-import { getSitesForUser } from './getSitesForUser';
+import { listSites } from './listSites';
 import type { Database } from '../../db';
 
-describe('getSitesForUser', () => {
+describe('listSites', () => {
   it('should throw an error if DB is missing', async () => {
     await expect(
-      getSitesForUser(null as unknown as Database, 'user123')
-    ).rejects.toThrow('getSitesForUser: missing DB or userId');
+      listSites(null as unknown as Database, 'user123')
+    ).rejects.toThrow('listSites: missing DB or userId');
   });
 
   it('should throw an error if userId is missing', async () => {
     const mockDb = {} as Database;
     await expect(
-      getSitesForUser(mockDb, '')
-    ).rejects.toThrow('getSitesForUser: missing DB or userId');
+      listSites(mockDb, '')
+    ).rejects.toThrow('listSites: missing DB or userId');
   });
 
   it('should return an empty array if no records are found', async () => {
@@ -26,7 +26,7 @@ describe('getSitesForUser', () => {
       }),
     } as unknown as Database;
 
-    const result = await getSitesForUser(mockDb, 'user123');
+    const result = await listSites(mockDb, 'user123');
 
     expect(result).toEqual([]);
   });
@@ -55,7 +55,7 @@ describe('getSitesForUser', () => {
       }),
     } as unknown as Database;
 
-    const result = await getSitesForUser(mockDb, 'user123');
+    const result = await listSites(mockDb, 'user123');
 
     expect(result).toHaveLength(2);
     expect(result[0]).toEqual({

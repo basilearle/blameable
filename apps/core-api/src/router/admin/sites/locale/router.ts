@@ -5,6 +5,7 @@ import {
   deleteSiteLocale,
   getSiteLocaleTranslations,
   listSiteLocales,
+  patchSiteLocaleTranslations,
 } from '@blameable/core-data';
 
 import { db } from '../../../../clients/db';
@@ -214,6 +215,80 @@ localeRouter.openapi(getLocaleTranslationsRoute, async (c) => {
 
 
 // SECTION: patch a locales tokens
+
+export const PatchLocaleParams = z.object({
+  siteId: z.string().openapi({
+    param: {
+      name: 'siteId',
+      in: 'path',
+    },
+    example: 'afskhfkjs',
+  }),
+  localeId: z.string().openapi({
+    param: {
+      name: 'localeId',
+      in: 'path',
+    },
+    example: 'afskhfkjs',
+  }),
+});
+
+export const PatchLocaleBody = z.record(
+  z.string(),
+  z.string(),
+);
+
+const patchLocaleRoute = createRoute({
+  description: 'updates the tokens of  a locale option to a site, for an authenticated user',
+  method: 'patch',
+  path: '/{siteId}/locales/{localeId}',
+  request: {
+    params: PatchLocaleParams,
+    body: {
+      content: {
+        'application/json': {
+          schema: PatchLocaleBody,
+        },
+      },
+    }
+  },
+  responses: {
+    201: {
+      description: 'successfully retrieved site locales',
+      required: true,
+      content: {
+        'application/json': {
+          schema: LocaleList,
+        },
+      },
+    },
+    400: {
+      description: 'unable to retrieve the site locales',
+    },
+  },
+});
+
+localeRouter.openapi(patchLocaleRoute, async (c) => {
+  const userId = c.get('userId');
+  const { siteId, localeId } = c.req.valid('param');
+  const translations = c.req.valid('json');
+
+  try {
+    const updatedTranslationTokens = await patchSiteLocaleTranslations(
+      db,
+      userId,
+      siteId,
+      localeId,
+      translations,
+    );
+
+    return c.json(updatedTranslationTokens);
+  } catch {
+    console.log('failed to delete the site locale...');
+  }
+
+  return c.body(null, 400);
+});
 
 // SECTION: delete a locale
 

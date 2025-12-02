@@ -3,4 +3,5 @@ export * from './create-site-locale/createSiteLocale';
 export * from './delete-site/deleteSite';
 export * from './delete-site-locale/deleteSiteLocale';
 export * from './patch-site/patchSite';
+export * from './patch-site-locale-translations/patchSiteLocaleTranslations';
 export * from './patch-theme/patchTheme';

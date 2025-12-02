@@ -33,6 +33,7 @@ const BootstrapGetSchema = z.object({
     example: 'en-CA',
   }),
   tokens: z.record(z.string(), z.string()),
+  theme: z.record(z.string(), z.string()),
 });
 
 const bootstrapGetRoute = createRoute({
@@ -88,5 +89,6 @@ clientBootstrapRouter.openapi(bootstrapGetRoute, async (c) => {
     availableLocales: config.availableLocales,
     defaultLocale,
     tokens,
+    theme: config.theme,
   }, 200);
 });

@@ -1,8 +1,10 @@
 import { createRoute, OpenAPIHono, z } from '@hono/zod-openapi';
 
+import { getSiteLocaleTranslations } from '@blameable/core-data';
+
+import { db } from '../../../clients/db';
 import { SiteIdVariables } from '../../../middleware/useSiteId';
 import { configService } from '../../../services/config/ConfigService';
-import { tokenService } from '../../../services/tokens/TokenService';
 
 export const clientBootstrapRouter = new OpenAPIHono<{ Variables: SiteIdVariables }>();
 
@@ -67,7 +69,13 @@ clientBootstrapRouter.openapi(bootstrapGetRoute, async (c) => {
     ? locale
     : config.defaultLocale;
 
-  const tokens = await tokenService.getTokensForLocale(siteId, defaultLocale);
+  // FIXME: either replace the `userId` or replace it with a valid `userId` for the client
+  const tokens = await getSiteLocaleTranslations(
+    db,
+    'cQzCcNobSvfVPnBwv1OGooo0WjcWS7ZJ',
+    siteId,
+    defaultLocale,
+  );
 
   if (!tokens) {
     return c.json(null, 400);

@@ -1,10 +1,13 @@
 import { createRoute, OpenAPIHono, z } from '@hono/zod-openapi';
 
-import { getSiteLocaleTranslations } from '@blameable/core-data';
+import {
+  getClientSiteConfig,
+  getSiteLocaleTranslations,
+} from '@blameable/core-data';
 
 import { db } from '../../../clients/db';
 import { SiteIdVariables } from '../../../middleware/useSiteId';
-import { configService } from '../../../services/config/ConfigService';
+// import { configService } from '../../../services/config/ConfigService';
 
 export const clientBootstrapRouter = new OpenAPIHono<{ Variables: SiteIdVariables }>();
 
@@ -58,7 +61,7 @@ clientBootstrapRouter.openapi(bootstrapGetRoute, async (c) => {
   const { locale } = c.req.valid('query');
   const siteId = c.get('siteId');
 
-  const config = await configService.getConfigForSite(siteId);
+  const config = await getClientSiteConfig(db, siteId);
 
   if (!config) {
     return c.json(null, 400);

@@ -1,7 +1,9 @@
 import { createRoute, OpenAPIHono } from '@hono/zod-openapi';
 
+import { createBlame } from '@blameable/core-data';
+
+import { db } from '../../../clients/db';
 import { SiteIdVariables } from '../../../middleware/useSiteId';
-import { blameService } from '../../../services/blame/BlameService';
 
 export const clientBlameRouter = new OpenAPIHono<{ Variables: SiteIdVariables }>();
 
@@ -24,7 +26,7 @@ clientBlameRouter.openapi(blamePostRoute, async (c) => {
     ?? c.req.header('x-real-ip')
     ?? 'unknown';
 
-  await blameService.assignBlame(siteId, ipAddress);
+  await createBlame(db, siteId, ipAddress);
 
   return c.body(null, 201);
 });

@@ -1,20 +1,24 @@
-import { Theme } from "@radix-ui/themes";
+import { Theme, ThemeProps } from "@radix-ui/themes";
 import type { PropsWithChildren } from "react";
 
-  // enums reflect the acceptable values of the Radix Theme appearance prop
-export type ThemeProviderAppearance = 'dark' | 'inherit' | 'light';
+import { useBaseStore } from '../../../store';
 
 export type ThemeProviderProps = PropsWithChildren & {
-  defaultAppearance?: ThemeProviderAppearance;
+  defaultAppearance?: ThemeProps['appearance'];
 };
 
 export function ThemeProvider({
   children,
   defaultAppearance = 'dark',
 }: ThemeProviderProps) {
+  const theme = useBaseStore((state) => state.theme) satisfies ThemeProps;
+
+  if (!theme.appearance) {
+    theme.appearance = defaultAppearance;
+  }
 
   return (
-    <Theme appearance={defaultAppearance}>
+    <Theme {...theme}>
       {children}
     </Theme>
   );

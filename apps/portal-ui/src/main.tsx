@@ -44,6 +44,7 @@ const locale = queryParameters.get('locale') ?? undefined;
         defaultStoreProps={{
           currentLocale: data.defaultLocale,
           localeOptions: data.availableLocales,
+          theme: data.theme,
           tokens: data.tokens,
         }}
       >

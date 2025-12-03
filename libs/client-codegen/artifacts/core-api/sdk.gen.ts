@@ -2,7 +2,7 @@
 
 import type { Client, Options as Options2, TDataShape } from './client';
 import { client } from './client.gen';
-import type { GetAdminSitesData, GetAdminSitesResponses, GetClientBootstrapData, GetClientBootstrapErrors, GetClientBootstrapResponses, GetClientTokensByLocaleData, GetClientTokensByLocaleErrors, GetClientTokensByLocaleResponses, GetHealthData, GetHealthResponses, PostClientBlameData, PostClientBlameResponses } from './types.gen';
+import type { DeleteAdminSitesBySiteIdData, DeleteAdminSitesBySiteIdErrors, DeleteAdminSitesBySiteIdLocalesByLocaleIdData, DeleteAdminSitesBySiteIdLocalesByLocaleIdErrors, DeleteAdminSitesBySiteIdLocalesByLocaleIdResponses, DeleteAdminSitesBySiteIdResponses, GetAdminSitesBySiteIdData, GetAdminSitesBySiteIdErrors, GetAdminSitesBySiteIdLocalesByLocaleIdData, GetAdminSitesBySiteIdLocalesByLocaleIdErrors, GetAdminSitesBySiteIdLocalesByLocaleIdResponses, GetAdminSitesBySiteIdLocalesData, GetAdminSitesBySiteIdLocalesErrors, GetAdminSitesBySiteIdLocalesResponses, GetAdminSitesBySiteIdResponses, GetAdminSitesBySiteIdThemeData, GetAdminSitesBySiteIdThemeErrors, GetAdminSitesBySiteIdThemeResponses, GetAdminSitesData, GetAdminSitesErrors, GetAdminSitesResponses, GetClientBootstrapData, GetClientBootstrapErrors, GetClientBootstrapResponses, GetClientTokensByLocaleData, GetClientTokensByLocaleErrors, GetClientTokensByLocaleResponses, GetHealthData, GetHealthResponses, PatchAdminSitesBySiteIdData, PatchAdminSitesBySiteIdErrors, PatchAdminSitesBySiteIdLocalesByLocaleIdData, PatchAdminSitesBySiteIdLocalesByLocaleIdErrors, PatchAdminSitesBySiteIdLocalesByLocaleIdResponses, PatchAdminSitesBySiteIdResponses, PatchAdminSitesBySiteIdThemeData, PatchAdminSitesBySiteIdThemeErrors, PatchAdminSitesBySiteIdThemeResponses, PostAdminSitesBySiteIdLocalesData, PostAdminSitesBySiteIdLocalesErrors, PostAdminSitesBySiteIdLocalesResponses, PostAdminSitesData, PostAdminSitesErrors, PostAdminSitesResponses, PostClientBlameData, PostClientBlameResponses } from './types.gen';
 
 export type Options<TData extends TDataShape = TDataShape, ThrowOnError extends boolean = boolean> = Options2<TData, ThrowOnError> & {
     /**
@@ -19,12 +19,142 @@ export type Options<TData extends TDataShape = TDataShape, ThrowOnError extends 
 };
 
 /**
- * gets the sites assigned to the logged in user
+ * lists the locales available for a site, for an authenticated user
+ */
+export const getAdminSitesBySiteIdLocales = <ThrowOnError extends boolean = false>(options: Options<GetAdminSitesBySiteIdLocalesData, ThrowOnError>) => {
+    return (options.client ?? client).get<GetAdminSitesBySiteIdLocalesResponses, GetAdminSitesBySiteIdLocalesErrors, ThrowOnError>({
+        url: '/admin/sites/{siteId}/locales',
+        ...options
+    });
+};
+
+/**
+ * adds a locale option to a site, for an authenticated user
+ */
+export const postAdminSitesBySiteIdLocales = <ThrowOnError extends boolean = false>(options: Options<PostAdminSitesBySiteIdLocalesData, ThrowOnError>) => {
+    return (options.client ?? client).post<PostAdminSitesBySiteIdLocalesResponses, PostAdminSitesBySiteIdLocalesErrors, ThrowOnError>({
+        url: '/admin/sites/{siteId}/locales',
+        ...options,
+        headers: {
+            'Content-Type': 'application/json',
+            ...options.headers
+        }
+    });
+};
+
+/**
+ * deletes a locale for a site, for an authenticated user
+ */
+export const deleteAdminSitesBySiteIdLocalesByLocaleId = <ThrowOnError extends boolean = false>(options: Options<DeleteAdminSitesBySiteIdLocalesByLocaleIdData, ThrowOnError>) => {
+    return (options.client ?? client).delete<DeleteAdminSitesBySiteIdLocalesByLocaleIdResponses, DeleteAdminSitesBySiteIdLocalesByLocaleIdErrors, ThrowOnError>({
+        url: '/admin/sites/{siteId}/locales/{localeId}',
+        ...options
+    });
+};
+
+/**
+ * gets the translations for a locale, for a site, for an authenticated user
+ */
+export const getAdminSitesBySiteIdLocalesByLocaleId = <ThrowOnError extends boolean = false>(options: Options<GetAdminSitesBySiteIdLocalesByLocaleIdData, ThrowOnError>) => {
+    return (options.client ?? client).get<GetAdminSitesBySiteIdLocalesByLocaleIdResponses, GetAdminSitesBySiteIdLocalesByLocaleIdErrors, ThrowOnError>({
+        url: '/admin/sites/{siteId}/locales/{localeId}',
+        ...options
+    });
+};
+
+/**
+ * updates the tokens of  a locale option to a site, for an authenticated user
+ */
+export const patchAdminSitesBySiteIdLocalesByLocaleId = <ThrowOnError extends boolean = false>(options: Options<PatchAdminSitesBySiteIdLocalesByLocaleIdData, ThrowOnError>) => {
+    return (options.client ?? client).patch<PatchAdminSitesBySiteIdLocalesByLocaleIdResponses, PatchAdminSitesBySiteIdLocalesByLocaleIdErrors, ThrowOnError>({
+        url: '/admin/sites/{siteId}/locales/{localeId}',
+        ...options,
+        headers: {
+            'Content-Type': 'application/json',
+            ...options.headers
+        }
+    });
+};
+
+/**
+ * gets the theme for a site, for an authenticated user. If merged is true, it will return the merged theme for the site, otherwise it will return the individual theme for the site.
+ */
+export const getAdminSitesBySiteIdTheme = <ThrowOnError extends boolean = false>(options: Options<GetAdminSitesBySiteIdThemeData, ThrowOnError>) => {
+    return (options.client ?? client).get<GetAdminSitesBySiteIdThemeResponses, GetAdminSitesBySiteIdThemeErrors, ThrowOnError>({
+        url: '/admin/sites/{siteId}/theme',
+        ...options
+    });
+};
+
+/**
+ * patch the theme for a site, for an authenticated user.
+ */
+export const patchAdminSitesBySiteIdTheme = <ThrowOnError extends boolean = false>(options: Options<PatchAdminSitesBySiteIdThemeData, ThrowOnError>) => {
+    return (options.client ?? client).patch<PatchAdminSitesBySiteIdThemeResponses, PatchAdminSitesBySiteIdThemeErrors, ThrowOnError>({
+        url: '/admin/sites/{siteId}/theme',
+        ...options,
+        headers: {
+            'Content-Type': 'application/json',
+            ...options.headers
+        }
+    });
+};
+
+/**
+ * lists the sites for an authenticated user
  */
 export const getAdminSites = <ThrowOnError extends boolean = false>(options?: Options<GetAdminSitesData, ThrowOnError>) => {
-    return (options?.client ?? client).get<GetAdminSitesResponses, unknown, ThrowOnError>({
+    return (options?.client ?? client).get<GetAdminSitesResponses, GetAdminSitesErrors, ThrowOnError>({
         url: '/admin/sites',
         ...options
+    });
+};
+
+/**
+ * creates a new site for an authenticated user
+ */
+export const postAdminSites = <ThrowOnError extends boolean = false>(options?: Options<PostAdminSitesData, ThrowOnError>) => {
+    return (options?.client ?? client).post<PostAdminSitesResponses, PostAdminSitesErrors, ThrowOnError>({
+        url: '/admin/sites',
+        ...options,
+        headers: {
+            'Content-Type': 'application/json',
+            ...options?.headers
+        }
+    });
+};
+
+/**
+ * deletes a site for an authenticated user
+ */
+export const deleteAdminSitesBySiteId = <ThrowOnError extends boolean = false>(options: Options<DeleteAdminSitesBySiteIdData, ThrowOnError>) => {
+    return (options.client ?? client).delete<DeleteAdminSitesBySiteIdResponses, DeleteAdminSitesBySiteIdErrors, ThrowOnError>({
+        url: '/admin/sites/{siteId}',
+        ...options
+    });
+};
+
+/**
+ * gets a site details for an authenticated user
+ */
+export const getAdminSitesBySiteId = <ThrowOnError extends boolean = false>(options: Options<GetAdminSitesBySiteIdData, ThrowOnError>) => {
+    return (options.client ?? client).get<GetAdminSitesBySiteIdResponses, GetAdminSitesBySiteIdErrors, ThrowOnError>({
+        url: '/admin/sites/{siteId}',
+        ...options
+    });
+};
+
+/**
+ * patch a site for an authenticated user
+ */
+export const patchAdminSitesBySiteId = <ThrowOnError extends boolean = false>(options: Options<PatchAdminSitesBySiteIdData, ThrowOnError>) => {
+    return (options.client ?? client).patch<PatchAdminSitesBySiteIdResponses, PatchAdminSitesBySiteIdErrors, ThrowOnError>({
+        url: '/admin/sites/{siteId}',
+        ...options,
+        headers: {
+            'Content-Type': 'application/json',
+            ...options.headers
+        }
     });
 };
 

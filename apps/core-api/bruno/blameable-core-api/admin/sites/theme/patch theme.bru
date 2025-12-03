@@ -1,0 +1,26 @@
+meta {
+  name: patch theme
+  type: http
+  seq: 2
+}
+
+patch {
+  url: http://localhost:3000/api/admin/sites/9d607f41-c697-4af1-b8b1-65b514763aee/theme
+  body: json
+  auth: inherit
+}
+
+params:query {
+  ~merged: true
+}
+
+body:json {
+  {
+    "accentColor": "violet"
+  }
+}
+
+settings {
+  encodeUrl: true
+  timeout: 0
+}

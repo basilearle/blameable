@@ -4,6 +4,200 @@ export type ClientOptions = {
     baseUrl: `${string}://${string}/api` | (string & {});
 };
 
+export type GetAdminSitesBySiteIdLocalesData = {
+    body?: never;
+    path: {
+        siteId: string;
+    };
+    query?: never;
+    url: '/admin/sites/{siteId}/locales';
+};
+
+export type GetAdminSitesBySiteIdLocalesErrors = {
+    /**
+     * unable to retrieve the site locales
+     */
+    400: unknown;
+};
+
+export type GetAdminSitesBySiteIdLocalesResponses = {
+    /**
+     * successfully retrieved site locales
+     */
+    200: Array<string>;
+};
+
+export type GetAdminSitesBySiteIdLocalesResponse = GetAdminSitesBySiteIdLocalesResponses[keyof GetAdminSitesBySiteIdLocalesResponses];
+
+export type PostAdminSitesBySiteIdLocalesData = {
+    body?: {
+        locale: string;
+    };
+    path: {
+        siteId: string;
+    };
+    query?: never;
+    url: '/admin/sites/{siteId}/locales';
+};
+
+export type PostAdminSitesBySiteIdLocalesErrors = {
+    /**
+     * unable to retrieve the site locales
+     */
+    400: unknown;
+};
+
+export type PostAdminSitesBySiteIdLocalesResponses = {
+    /**
+     * successfully retrieved site locales
+     */
+    201: Array<string>;
+};
+
+export type PostAdminSitesBySiteIdLocalesResponse = PostAdminSitesBySiteIdLocalesResponses[keyof PostAdminSitesBySiteIdLocalesResponses];
+
+export type DeleteAdminSitesBySiteIdLocalesByLocaleIdData = {
+    body?: never;
+    path: {
+        siteId: string;
+        localeId: string;
+    };
+    query?: never;
+    url: '/admin/sites/{siteId}/locales/{localeId}';
+};
+
+export type DeleteAdminSitesBySiteIdLocalesByLocaleIdErrors = {
+    /**
+     * unable to delete the site locale
+     */
+    400: unknown;
+};
+
+export type DeleteAdminSitesBySiteIdLocalesByLocaleIdResponses = {
+    /**
+     * site locale was deleted successfully
+     */
+    204: void;
+};
+
+export type DeleteAdminSitesBySiteIdLocalesByLocaleIdResponse = DeleteAdminSitesBySiteIdLocalesByLocaleIdResponses[keyof DeleteAdminSitesBySiteIdLocalesByLocaleIdResponses];
+
+export type GetAdminSitesBySiteIdLocalesByLocaleIdData = {
+    body?: never;
+    path: {
+        siteId: string;
+        localeId: string;
+    };
+    query?: {
+        merged?: 'true' | 'false';
+    };
+    url: '/admin/sites/{siteId}/locales/{localeId}';
+};
+
+export type GetAdminSitesBySiteIdLocalesByLocaleIdErrors = {
+    /**
+     * unable to get the site locale translations
+     */
+    400: unknown;
+};
+
+export type GetAdminSitesBySiteIdLocalesByLocaleIdResponses = {
+    /**
+     * retrieved the site locale translations successfully
+     */
+    200: {
+        [key: string]: string;
+    };
+};
+
+export type GetAdminSitesBySiteIdLocalesByLocaleIdResponse = GetAdminSitesBySiteIdLocalesByLocaleIdResponses[keyof GetAdminSitesBySiteIdLocalesByLocaleIdResponses];
+
+export type PatchAdminSitesBySiteIdLocalesByLocaleIdData = {
+    body?: {
+        [key: string]: string;
+    };
+    path: {
+        siteId: string;
+        localeId: string;
+    };
+    query?: never;
+    url: '/admin/sites/{siteId}/locales/{localeId}';
+};
+
+export type PatchAdminSitesBySiteIdLocalesByLocaleIdErrors = {
+    /**
+     * unable to retrieve the site locales
+     */
+    400: unknown;
+};
+
+export type PatchAdminSitesBySiteIdLocalesByLocaleIdResponses = {
+    /**
+     * successfully retrieved site locales
+     */
+    201: Array<string>;
+};
+
+export type PatchAdminSitesBySiteIdLocalesByLocaleIdResponse = PatchAdminSitesBySiteIdLocalesByLocaleIdResponses[keyof PatchAdminSitesBySiteIdLocalesByLocaleIdResponses];
+
+export type GetAdminSitesBySiteIdThemeData = {
+    body?: never;
+    path: {
+        siteId: string;
+    };
+    query?: {
+        merged?: 'true' | 'false';
+    };
+    url: '/admin/sites/{siteId}/theme';
+};
+
+export type GetAdminSitesBySiteIdThemeErrors = {
+    /**
+     * unable to retrieve the theme
+     */
+    400: unknown;
+};
+
+export type GetAdminSitesBySiteIdThemeResponses = {
+    /**
+     * successfully retrieved the theme
+     */
+    200: {
+        [key: string]: string;
+    };
+};
+
+export type GetAdminSitesBySiteIdThemeResponse = GetAdminSitesBySiteIdThemeResponses[keyof GetAdminSitesBySiteIdThemeResponses];
+
+export type PatchAdminSitesBySiteIdThemeData = {
+    body?: {
+        [key: string]: string;
+    };
+    path: {
+        siteId: string;
+    };
+    query?: never;
+    url: '/admin/sites/{siteId}/theme';
+};
+
+export type PatchAdminSitesBySiteIdThemeErrors = {
+    /**
+     * unable to retrieve the theme
+     */
+    400: unknown;
+};
+
+export type PatchAdminSitesBySiteIdThemeResponses = {
+    /**
+     * successfully retrieved the theme
+     */
+    200: {
+        [key: string]: string;
+    };
+};
+
+export type PatchAdminSitesBySiteIdThemeResponse = PatchAdminSitesBySiteIdThemeResponses[keyof PatchAdminSitesBySiteIdThemeResponses];
+
 export type GetAdminSitesData = {
     body?: never;
     path?: never;
@@ -11,21 +205,150 @@ export type GetAdminSitesData = {
     url: '/admin/sites';
 };
 
+export type GetAdminSitesErrors = {
+    /**
+     * unable to retrieve the sites
+     */
+    400: unknown;
+};
+
 export type GetAdminSitesResponses = {
     /**
-     * found a list of sites
+     * successfully retrieved site theme
      */
-    200: {
-        sites: Array<{
-            id: string;
-            name: string;
-            defaultLocale: string;
-            configuredLocales: Array<string>;
-        }>;
-    };
+    200: Array<{
+        id: string;
+        name: string;
+        isOwner: boolean;
+    }>;
 };
 
 export type GetAdminSitesResponse = GetAdminSitesResponses[keyof GetAdminSitesResponses];
+
+export type PostAdminSitesData = {
+    body?: {
+        name: string;
+        defaultLocale?: string;
+    };
+    path?: never;
+    query?: never;
+    url: '/admin/sites';
+};
+
+export type PostAdminSitesErrors = {
+    /**
+     * unable to create the site
+     */
+    400: unknown;
+};
+
+export type PostAdminSitesResponses = {
+    /**
+     * successfully created the site
+     */
+    201: {
+        id: string;
+        name: string;
+        defaultLocale: string;
+        isOwner: boolean;
+        createdAt: string;
+        updatedAt: string;
+    };
+};
+
+export type PostAdminSitesResponse = PostAdminSitesResponses[keyof PostAdminSitesResponses];
+
+export type DeleteAdminSitesBySiteIdData = {
+    body?: never;
+    path: {
+        siteId: string;
+    };
+    query?: never;
+    url: '/admin/sites/{siteId}';
+};
+
+export type DeleteAdminSitesBySiteIdErrors = {
+    /**
+     * unable to delete the site
+     */
+    400: unknown;
+};
+
+export type DeleteAdminSitesBySiteIdResponses = {
+    /**
+     * site was deleted successfully
+     */
+    204: void;
+};
+
+export type DeleteAdminSitesBySiteIdResponse = DeleteAdminSitesBySiteIdResponses[keyof DeleteAdminSitesBySiteIdResponses];
+
+export type GetAdminSitesBySiteIdData = {
+    body?: never;
+    path: {
+        siteId: string;
+    };
+    query?: never;
+    url: '/admin/sites/{siteId}';
+};
+
+export type GetAdminSitesBySiteIdErrors = {
+    /**
+     * unable to retrieve the site
+     */
+    400: unknown;
+};
+
+export type GetAdminSitesBySiteIdResponses = {
+    /**
+     * successfully retrieved the site
+     */
+    200: {
+        id: string;
+        name: string;
+        defaultLocale: string;
+        isOwner: boolean;
+        createdAt: string;
+        updatedAt: string;
+    };
+};
+
+export type GetAdminSitesBySiteIdResponse = GetAdminSitesBySiteIdResponses[keyof GetAdminSitesBySiteIdResponses];
+
+export type PatchAdminSitesBySiteIdData = {
+    body?: {
+        name?: string;
+        defaultLocale?: string;
+    };
+    path: {
+        siteId: string;
+    };
+    query?: never;
+    url: '/admin/sites/{siteId}';
+};
+
+export type PatchAdminSitesBySiteIdErrors = {
+    /**
+     * unable to delete the site
+     */
+    400: unknown;
+};
+
+export type PatchAdminSitesBySiteIdResponses = {
+    /**
+     * site was deleted successfully
+     */
+    200: {
+        id: string;
+        name: string;
+        defaultLocale: string;
+        isOwner: boolean;
+        createdAt: string;
+        updatedAt: string;
+    };
+};
+
+export type PatchAdminSitesBySiteIdResponse = PatchAdminSitesBySiteIdResponses[keyof PatchAdminSitesBySiteIdResponses];
 
 export type PostClientBlameData = {
     body?: never;
@@ -65,6 +388,9 @@ export type GetClientBootstrapResponses = {
         availableLocales: Array<string>;
         defaultLocale: string;
         tokens: {
+            [key: string]: string;
+        };
+        theme: {
             [key: string]: string;
         };
     };

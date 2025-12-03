@@ -1,8 +1,9 @@
-import { test, expect } from '@playwright/test';
+import { test, expect } from './fixtures';
 
 test('has title', async ({ page }) => {
+  // APIs are automatically mocked via fixture
   await page.goto('/');
 
-  // NOTE: seems BetterAuth is not returning a missing session in e2e mode right now.
+  // Expect h2 to contain the dashboard title
   expect(await page.locator('h2').innerText()).toContain('This is the Dashboard.');
 });

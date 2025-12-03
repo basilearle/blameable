@@ -16,7 +16,7 @@
       "better-auth-generate": {
         "executor": "nx:run-commands",
         "options": {
-          "command": "npx @better-auth/cli generate -y --config src/lib/auth.ts --output src/lib/drizzle-schemas/auth.ts",
+          "command": "npx @better-auth/cli generate -y --config auth.config.ts --output src/lib/drizzle-schemas/auth.ts",
           "cwd": "libs/core-data/src/lib"
         }
       },

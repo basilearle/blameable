@@ -15,53 +15,588 @@
     "parameters": {}
   },
   "paths": {
-    "/admin/sites": {
+    "/admin/sites/{siteId}/locales": {
       "get": {
-        "description": "gets the sites assigned to the logged in user",
+        "description": "lists the locales available for a site, for an authenticated user",
+        "parameters": [
+          {
+            "schema": {
+              "type": "string",
+              "example": "afskhfkjs"
+            },
+            "required": true,
+            "name": "siteId",
+            "in": "path"
+          }
+        ],
         "responses": {
           "200": {
-            "description": "found a list of sites",
+            "description": "successfully retrieved site locales",
+            "required": true,
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "type": "string"
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "unable to retrieve the site locales"
+          }
+        }
+      },
+      "post": {
+        "description": "adds a locale option to a site, for an authenticated user",
+        "parameters": [
+          {
+            "schema": {
+              "type": "string",
+              "example": "afskhfkjs"
+            },
+            "required": true,
+            "name": "siteId",
+            "in": "path"
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "locale": {
+                    "type": "string"
+                  }
+                },
+                "required": [
+                  "locale"
+                ]
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "successfully retrieved site locales",
+            "required": true,
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "type": "string"
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "unable to retrieve the site locales"
+          }
+        }
+      }
+    },
+    "/admin/sites/{siteId}/locales/{localeId}": {
+      "get": {
+        "description": "gets the translations for a locale, for a site, for an authenticated user",
+        "parameters": [
+          {
+            "schema": {
+              "type": "string",
+              "example": "afskhfkjs"
+            },
+            "required": true,
+            "name": "siteId",
+            "in": "path"
+          },
+          {
+            "schema": {
+              "type": "string",
+              "example": "afskhfkjs"
+            },
+            "required": true,
+            "name": "localeId",
+            "in": "path"
+          },
+          {
+            "schema": {
+              "type": "string",
+              "enum": [
+                "true",
+                "false"
+              ]
+            },
+            "required": false,
+            "name": "merged",
+            "in": "query"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "retrieved the site locale translations successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "additionalProperties": {
+                    "type": "string"
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "unable to get the site locale translations"
+          }
+        }
+      },
+      "patch": {
+        "description": "updates the tokens of  a locale option to a site, for an authenticated user",
+        "parameters": [
+          {
+            "schema": {
+              "type": "string",
+              "example": "afskhfkjs"
+            },
+            "required": true,
+            "name": "siteId",
+            "in": "path"
+          },
+          {
+            "schema": {
+              "type": "string",
+              "example": "afskhfkjs"
+            },
+            "required": true,
+            "name": "localeId",
+            "in": "path"
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "additionalProperties": {
+                  "type": "string"
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "successfully retrieved site locales",
+            "required": true,
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "type": "string"
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "unable to retrieve the site locales"
+          }
+        }
+      },
+      "delete": {
+        "description": "deletes a locale for a site, for an authenticated user",
+        "parameters": [
+          {
+            "schema": {
+              "type": "string",
+              "example": "afskhfkjs"
+            },
+            "required": true,
+            "name": "siteId",
+            "in": "path"
+          },
+          {
+            "schema": {
+              "type": "string",
+              "example": "afskhfkjs"
+            },
+            "required": true,
+            "name": "localeId",
+            "in": "path"
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "site locale was deleted successfully"
+          },
+          "400": {
+            "description": "unable to delete the site locale"
+          }
+        }
+      }
+    },
+    "/admin/sites/{siteId}/theme": {
+      "get": {
+        "description": "gets the theme for a site, for an authenticated user. If merged is true, it will return the merged theme for the site, otherwise it will return the individual theme for the site.",
+        "parameters": [
+          {
+            "schema": {
+              "type": "string",
+              "example": "afskhfkjs"
+            },
+            "required": true,
+            "name": "siteId",
+            "in": "path"
+          },
+          {
+            "schema": {
+              "type": "string",
+              "enum": [
+                "true",
+                "false"
+              ]
+            },
+            "required": false,
+            "name": "merged",
+            "in": "query"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successfully retrieved the theme",
+            "required": true,
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "additionalProperties": {
+                    "type": "string"
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "unable to retrieve the theme"
+          }
+        }
+      },
+      "patch": {
+        "description": "patch the theme for a site, for an authenticated user.",
+        "parameters": [
+          {
+            "schema": {
+              "type": "string",
+              "example": "afskhfkjs"
+            },
+            "required": true,
+            "name": "siteId",
+            "in": "path"
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "additionalProperties": {
+                  "type": "string"
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "successfully retrieved the theme",
+            "required": true,
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "additionalProperties": {
+                    "type": "string"
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "unable to retrieve the theme"
+          }
+        }
+      }
+    },
+    "/admin/sites": {
+      "get": {
+        "description": "lists the sites for an authenticated user",
+        "responses": {
+          "200": {
+            "description": "successfully retrieved site theme",
+            "required": true,
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "id": {
+                        "type": "string"
+                      },
+                      "name": {
+                        "type": "string"
+                      },
+                      "isOwner": {
+                        "type": "boolean"
+                      }
+                    },
+                    "required": [
+                      "id",
+                      "name",
+                      "isOwner"
+                    ]
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "unable to retrieve the sites"
+          }
+        }
+      },
+      "post": {
+        "description": "creates a new site for an authenticated user",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "name": {
+                    "type": "string"
+                  },
+                  "defaultLocale": {
+                    "type": "string"
+                  }
+                },
+                "required": [
+                  "name"
+                ]
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "successfully created the site",
+            "required": true,
             "content": {
               "application/json": {
                 "schema": {
                   "type": "object",
                   "properties": {
-                    "sites": {
-                      "type": "array",
-                      "items": {
-                        "type": "object",
-                        "properties": {
-                          "id": {
-                            "type": "string"
-                          },
-                          "name": {
-                            "type": "string"
-                          },
-                          "defaultLocale": {
-                            "type": "string"
-                          },
-                          "configuredLocales": {
-                            "type": "array",
-                            "items": {
-                              "type": "string"
-                            }
-                          }
-                        },
-                        "required": [
-                          "id",
-                          "name",
-                          "defaultLocale",
-                          "configuredLocales"
-                        ]
-                      }
+                    "id": {
+                      "type": "string"
+                    },
+                    "name": {
+                      "type": "string"
+                    },
+                    "defaultLocale": {
+                      "type": "string"
+                    },
+                    "isOwner": {
+                      "type": "boolean"
+                    },
+                    "createdAt": {
+                      "type": "string",
+                      "format": "date"
+                    },
+                    "updatedAt": {
+                      "type": "string",
+                      "format": "date"
                     }
                   },
                   "required": [
-                    "sites"
+                    "id",
+                    "name",
+                    "defaultLocale",
+                    "isOwner",
+                    "createdAt",
+                    "updatedAt"
                   ]
                 }
               }
             }
+          },
+          "400": {
+            "description": "unable to create the site"
+          }
+        }
+      }
+    },
+    "/admin/sites/{siteId}": {
+      "get": {
+        "description": "gets a site details for an authenticated user",
+        "parameters": [
+          {
+            "schema": {
+              "type": "string",
+              "example": "afskhfkjs"
+            },
+            "required": true,
+            "name": "siteId",
+            "in": "path"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successfully retrieved the site",
+            "required": true,
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "id": {
+                      "type": "string"
+                    },
+                    "name": {
+                      "type": "string"
+                    },
+                    "defaultLocale": {
+                      "type": "string"
+                    },
+                    "isOwner": {
+                      "type": "boolean"
+                    },
+                    "createdAt": {
+                      "type": "string",
+                      "format": "date"
+                    },
+                    "updatedAt": {
+                      "type": "string",
+                      "format": "date"
+                    }
+                  },
+                  "required": [
+                    "id",
+                    "name",
+                    "defaultLocale",
+                    "isOwner",
+                    "createdAt",
+                    "updatedAt"
+                  ]
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "unable to retrieve the site"
+          }
+        }
+      },
+      "patch": {
+        "description": "patch a site for an authenticated user",
+        "parameters": [
+          {
+            "schema": {
+              "type": "string",
+              "example": "afskhfkjs"
+            },
+            "required": true,
+            "name": "siteId",
+            "in": "path"
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "name": {
+                    "type": "string"
+                  },
+                  "defaultLocale": {
+                    "type": "string"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "site was deleted successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "id": {
+                      "type": "string"
+                    },
+                    "name": {
+                      "type": "string"
+                    },
+                    "defaultLocale": {
+                      "type": "string"
+                    },
+                    "isOwner": {
+                      "type": "boolean"
+                    },
+                    "createdAt": {
+                      "type": "string",
+                      "format": "date"
+                    },
+                    "updatedAt": {
+                      "type": "string",
+                      "format": "date"
+                    }
+                  },
+                  "required": [
+                    "id",
+                    "name",
+                    "defaultLocale",
+                    "isOwner",
+                    "createdAt",
+                    "updatedAt"
+                  ]
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "unable to delete the site"
+          }
+        }
+      },
+      "delete": {
+        "description": "deletes a site for an authenticated user",
+        "parameters": [
+          {
+            "schema": {
+              "type": "string",
+              "example": "afskhfkjs"
+            },
+            "required": true,
+            "name": "siteId",
+            "in": "path"
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "site was deleted successfully"
+          },
+          "400": {
+            "description": "unable to delete the site"
           }
         }
       }
@@ -118,12 +653,19 @@
                       "additionalProperties": {
                         "type": "string"
                       }
+                    },
+                    "theme": {
+                      "type": "object",
+                      "additionalProperties": {
+                        "type": "string"
+                      }
                     }
                   },
                   "required": [
                     "availableLocales",
                     "defaultLocale",
-                    "tokens"
+                    "tokens",
+                    "theme"
                   ]
                 }
               }

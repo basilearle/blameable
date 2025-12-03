@@ -22,40 +22,36 @@ describe('getSiteDetails', () => {
     ).rejects.toThrow('getSiteDetails: missing DB, siteId or userId');
   });
 
-  it('should return null when user does not have access to the site', async () => {
+  it('should throw an error when user does not have access to the site', async () => {
     const mockDb = {
       select: jest.fn().mockReturnValue({
         from: jest.fn().mockReturnValue({
           innerJoin: jest.fn().mockReturnValue({
-            where: jest.fn().mockReturnValue({
-              limit: jest.fn().mockResolvedValue([]),
-            }),
+            where: jest.fn().mockResolvedValue([]),
           }),
         }),
       }),
     } as unknown as Database;
 
-    const result = await getSiteDetails(mockDb, 'site-123', 'user-123');
-
-    expect(result).toBeNull();
+    await expect(
+      getSiteDetails(mockDb, 'site-123', 'user-123')
+    ).rejects.toThrow('getSiteDetails: site not found');
   });
 
-  it('should return null when site does not exist', async () => {
+  it('should throw an error when site does not exist', async () => {
     const mockDb = {
       select: jest.fn().mockReturnValue({
         from: jest.fn().mockReturnValue({
           innerJoin: jest.fn().mockReturnValue({
-            where: jest.fn().mockReturnValue({
-              limit: jest.fn().mockResolvedValue([]),
-            }),
+            where: jest.fn().mockResolvedValue([]),
           }),
         }),
       }),
     } as unknown as Database;
 
-    const result = await getSiteDetails(mockDb, 'non-existent-site', 'user-123');
-
-    expect(result).toBeNull();
+    await expect(
+      getSiteDetails(mockDb, 'non-existent-site', 'user-123')
+    ).rejects.toThrow('getSiteDetails: site not found');
   });
 
   it('should correctly return site details when user has access', async () => {
@@ -63,7 +59,6 @@ describe('getSiteDetails', () => {
       id: 'site-123',
       name: 'Test Site',
       defaultLocale: 'en-US',
-      global: false,
       isOwner: true,
       createdAt: new Date('2024-01-01'),
       updatedAt: new Date('2024-01-02'),
@@ -73,9 +68,7 @@ describe('getSiteDetails', () => {
       select: jest.fn().mockReturnValue({
         from: jest.fn().mockReturnValue({
           innerJoin: jest.fn().mockReturnValue({
-            where: jest.fn().mockReturnValue({
-              limit: jest.fn().mockResolvedValue([mockSiteData]),
-            }),
+            where: jest.fn().mockResolvedValue([mockSiteData]),
           }),
         }),
       }),
@@ -87,7 +80,6 @@ describe('getSiteDetails', () => {
       id: 'site-123',
       name: 'Test Site',
       defaultLocale: 'en-US',
-      global: false,
       isOwner: true,
       createdAt: new Date('2024-01-01'),
       updatedAt: new Date('2024-01-02'),
@@ -99,7 +91,6 @@ describe('getSiteDetails', () => {
       id: 'site-456',
       name: 'Shared Site',
       defaultLocale: 'fr-FR',
-      global: true,
       isOwner: false,
       createdAt: new Date('2024-02-01'),
       updatedAt: new Date('2024-02-15'),
@@ -109,9 +100,7 @@ describe('getSiteDetails', () => {
       select: jest.fn().mockReturnValue({
         from: jest.fn().mockReturnValue({
           innerJoin: jest.fn().mockReturnValue({
-            where: jest.fn().mockReturnValue({
-              limit: jest.fn().mockResolvedValue([mockSiteData]),
-            }),
+            where: jest.fn().mockResolvedValue([mockSiteData]),
           }),
         }),
       }),
@@ -123,7 +112,6 @@ describe('getSiteDetails', () => {
       id: 'site-456',
       name: 'Shared Site',
       defaultLocale: 'fr-FR',
-      global: true,
       isOwner: false,
       createdAt: new Date('2024-02-01'),
       updatedAt: new Date('2024-02-15'),

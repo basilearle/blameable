@@ -5,7 +5,7 @@ import { DashboardLoaderData } from './DashboardRoute.loader';
 export function DashboardRoute() {
   const { data } = useLoaderData<DashboardLoaderData>();
 
-  const siteList = data?.sites?.map((site) => (
+  const siteList = data?.map((site) => (
     <li key={site.id}>{site.name}</li>
   ));
 

@@ -68,6 +68,7 @@ export async function mockBootstrap(
         availableLocales: Object.keys(LOCALE_TOKENS),
         defaultLocale: DEFAULT_LOCALE,
         tokens,
+        theme: {},
       }),
     });
   });

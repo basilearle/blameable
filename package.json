@@ -3,7 +3,8 @@
   "version": "0.0.1",
   "scripts": {
     "start": "nx run-many -t dev",
-    "dockerize": "nx run-many -t docker-build"
+    "dockerize": "nx run-many -t docker-build",
+    "storybook:compose": "nx run-many -t static-storybook -p portal-ui admin-ui client-common & sleep 5 && nx static-storybook storybook-composer"
   },
   "private": true,
   "dependencies": {
